@@ -43,24 +43,24 @@ void GunUI::DrawSprite()
 	}
 
 	 m_rect1 = { 0 + (m_clipTexNum1 * 45),0,(long)m_spBulletNunTex->GetWidth() / 10,(long)m_spBulletNunTex->GetHeight() };
-	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, -500, 240, m_rect1.width, m_rect1.height, &m_rect1, &m_BulletNunColor);
+	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, m_UIpos .x-100, m_UIpos.y, m_rect1.width, m_rect1.height, &m_rect1, &m_BulletNunColor);
 
 	 m_rect2 = { 0 + (m_clipTexNum2 * 45),0,(long)m_spBulletNunTex->GetWidth() / 10,(long)m_spBulletNunTex->GetHeight() };
-	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, -450, 240, m_rect2.width, m_rect2.height, &m_rect2, &m_BulletNunColor);
+	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, m_UIpos.x - 50, m_UIpos.y, m_rect2.width, m_rect2.height, &m_rect2, &m_BulletNunColor);
 
 	 m_rect3 = { 0 + (m_clipTexNum3 * 45),0,(long)m_spBulletNunTex->GetWidth() / 10,(long)m_spBulletNunTex->GetHeight() };
-	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, -400, 240, m_rect3.width, m_rect3.height, &m_rect3, &m_BulletNunColor);
+	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, m_UIpos.x, m_UIpos.y, m_rect3.width, m_rect3.height, &m_rect3, &m_BulletNunColor);
 
 	 m_TopRect = { 0,0,(long)m_spMagazinTexTop->GetWidth() ,0 + (((long)m_spMagazinTexTop->GetHeight() /MaxBullet)* NowBullet)};
-	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spMagazinTexTop, -570, 330, m_TopRect.width, m_TopRect.height, &m_TopRect, &m_TopColor,{(0.5f),{1.0f}});
+	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spMagazinTexTop, m_UIpos.x-170, m_UIpos.y + 70, m_TopRect.width, m_TopRect.height, &m_TopRect, &m_TopColor,{(0.5f),{1.0f}});
 
 	 m_UnderRect = { 0,0,(long)m_spMagazinTexUnder->GetWidth() ,(long)m_spMagazinTexUnder->GetHeight()};
-	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spMagazinTexUnder, -570, 250, m_UnderRect.width, m_UnderRect.height, &m_UnderRect, &m_UnderColor);
+	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spMagazinTexUnder, m_UIpos.x-170, m_UIpos.y-10, m_UnderRect.width, m_UnderRect.height, &m_UnderRect, &m_UnderColor);
 }
 
 void GunUI::Init()
 {
-	m_pos = { -500,-300 };
+	m_UIpos = { -400,200 };
 	MaxBullet = m_wpGun.lock()->GetMaxBullet();
 
 	m_spBulletNunTex = std::make_shared<KdTexture>();

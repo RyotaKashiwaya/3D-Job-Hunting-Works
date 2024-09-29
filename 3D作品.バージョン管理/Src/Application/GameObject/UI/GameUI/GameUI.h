@@ -24,6 +24,8 @@ private:
 	std::shared_ptr<KdTexture> m_spGoalTex = nullptr;
 	std::shared_ptr<KdTexture> m_spCarIconTex = nullptr;
 
+	Math::Vector3			   m_ScoreUIPos = {};
+	Math::Vector3			   m_TimeUIPos = {};
 	Math::Rectangle			   m_RemainingGoalRect = {};
 
 	const float				   m_RemainingGoal = 100;

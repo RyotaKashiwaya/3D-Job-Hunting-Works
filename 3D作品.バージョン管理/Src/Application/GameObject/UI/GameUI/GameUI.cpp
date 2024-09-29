@@ -37,32 +37,32 @@ void GameUI::DrawSprite()
 	if (m_spTimeNumTex)
 	{
 		m_TimeRect = { 0 + ((long)(m_spTimeNumTex->GetWidth() / 10) * m_TimesScoreNum1),0,(long)(m_spTimeNumTex->GetWidth() / 10),(long)m_spTimeNumTex->GetHeight() };
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeNumTex, 0, 250, m_TimeRect.width, m_TimeRect.height,&m_TimeRect);
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeNumTex, m_TimeUIPos.x, m_TimeUIPos.y, m_TimeRect.width, m_TimeRect.height,&m_TimeRect);
 		m_TimeRect = { 0 + ((long)(m_spTimeNumTex->GetWidth() / 10) * m_TimesScoreNum2),0,(long)(m_spTimeNumTex->GetWidth() / 10),(long)m_spTimeNumTex->GetHeight() };
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeNumTex, 40, 250, m_TimeRect.width, m_TimeRect.height, &m_TimeRect);
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeNumTex, m_TimeUIPos.x + 40, m_TimeUIPos.y, m_TimeRect.width, m_TimeRect.height, &m_TimeRect);
 		m_TimeRect = { 0 + ((long)(m_spTimeNumTex->GetWidth() / 10) * m_TimesScoreNum3),0,(long)(m_spTimeNumTex->GetWidth() / 10),(long)m_spTimeNumTex->GetHeight() };
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeNumTex, 80, 250, m_TimeRect.width, m_TimeRect.height, &m_TimeRect);
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeNumTex, m_TimeUIPos.x + 80, m_TimeUIPos.y, m_TimeRect.width, m_TimeRect.height, &m_TimeRect);
 	}
 	if (m_spGoalBackTex)
 	{
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spGoalBackTex, 0, 300);
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spGoalBackTex, m_ScoreUIPos.x, m_ScoreUIPos.y);
 	}
 	if (m_spRemainingGoalTex)
 	{
 		m_RemainingGoalRect = { 0,0,(long)m_spRemainingGoalTex->GetWidth() - (long)(m_spRemainingGoalTex->GetWidth() / 100 * m_rectNum),(long)m_spRemainingGoalTex->GetHeight() };
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spRemainingGoalTex, (long)m_spRemainingGoalTex->GetWidth()/2, 300, m_RemainingGoalRect.width, m_RemainingGoalRect.height, &m_RemainingGoalRect,nullptr, { (1.0f),(0.5f) });
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spRemainingGoalTex, m_ScoreUIPos.x + (long)m_spRemainingGoalTex->GetWidth()/2, m_ScoreUIPos.y, m_RemainingGoalRect.width, m_RemainingGoalRect.height, &m_RemainingGoalRect,nullptr, { (1.0f),(0.5f) });
 	}
 	if (m_spGoalBerTex)
 	{
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spGoalBerTex, 0, 300);
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spGoalBerTex, m_ScoreUIPos.x, m_ScoreUIPos.y);
 	}
 	if (m_spGoalTex)
 	{
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spGoalTex, 281, 320);
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spGoalTex, m_ScoreUIPos.x + 281, m_ScoreUIPos.y + 20);
 	}
 	if (m_spCarIconTex)
 	{
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spCarIconTex,m_spRemainingGoalTex->GetWidth() * -0.5f + (long)(m_spRemainingGoalTex->GetWidth() / 100 * m_rectNum), 300,nullptr,nullptr,{(0.5f),(m_iconPivotY)});
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spCarIconTex, m_ScoreUIPos.x+m_spRemainingGoalTex->GetWidth() * -0.5f + (long)(m_spRemainingGoalTex->GetWidth() / 100 * m_rectNum), m_ScoreUIPos.y,nullptr,nullptr,{(0.5f),(m_iconPivotY)});
 	}
 }
 
@@ -99,7 +99,8 @@ void GameUI::Init()
 		m_spCarIconTex->Load("Asset/Textures/Object/UI/GameUI/CarIcon.png");
 	}
 
-
+	m_ScoreUIPos = {-330,300,0};
+	m_TimeUIPos = { -20,300,0 };;
 }
 
 void GameUI::TimeCount()

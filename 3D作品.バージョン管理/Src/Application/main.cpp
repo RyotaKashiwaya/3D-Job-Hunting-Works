@@ -363,7 +363,7 @@ void Application::ImGuiInit()
 
 void Application::ImGuiProcess()
 {
-	//return;
+	return;
 
 	//===========================================================
 	// ImGui開始

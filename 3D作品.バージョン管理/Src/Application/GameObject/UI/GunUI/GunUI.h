@@ -30,7 +30,7 @@ private:
 	int						   m_clipTexNum2 = 0;
 	int						   m_clipTexNum3 = 0;
 
-	Math::Vector2			   m_pos = Math::Vector2::Zero;
+	Math::Vector2			   m_UIpos = Math::Vector2::Zero;
 	Math::Vector3			   m_Scale = Math::Vector3::Zero;
 	Math::Matrix			   m_ScaleMat = Math::Matrix::Identity;
 
