@@ -24,7 +24,7 @@ private:
 	std::weak_ptr<WeaponBase>	m_wpGun;
 	std::shared_ptr<WeaponBase> m_spGun;
 	std::shared_ptr<KdTexture> m_spBulletNunTex;
-	std::shared_ptr<KdTexture> m_spReloadTex;
+	std::shared_ptr<KdTexture> m_spReloadText;
 	
 	int						   m_clipTexNum1 = 0;
 	int						   m_clipTexNum2 = 0;
@@ -53,4 +53,5 @@ private:
 
 	Math::Color				   m_TopColor = { 1,1,1,1 };
 	Math::Color				   m_UnderColor = { 1,1,1,0.5f };
+	Math::Color				   m_ReloadTextColor = { 1,1,1,1 };
 };

@@ -37,11 +37,6 @@ void GunUI::DrawSprite()
 
 	m_BulletNunColor = { 1,1,1,ColorIntensity };
 
-	if (m_spGun->GetIsReload() == true)
-	{
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spReloadTex, -450, 300, nullptr, nullptr);
-	}
-
 	 m_rect1 = { 0 + (m_clipTexNum1 * 45),0,(long)m_spBulletNunTex->GetWidth() / 10,(long)m_spBulletNunTex->GetHeight() };
 	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, m_UIpos .x-100, m_UIpos.y, m_rect1.width, m_rect1.height, &m_rect1, &m_BulletNunColor);
 
@@ -56,6 +51,13 @@ void GunUI::DrawSprite()
 
 	 m_UnderRect = { 0,0,(long)m_spMagazinTexUnder->GetWidth() ,(long)m_spMagazinTexUnder->GetHeight()};
 	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spMagazinTexUnder, m_UIpos.x-170, m_UIpos.y-10, m_UnderRect.width, m_UnderRect.height, &m_UnderRect, &m_UnderColor);
+
+
+	 if (m_spGun->GetIsReload() == true)
+	 {
+		 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spReloadText, m_UIpos.x - 175, m_UIpos.y, nullptr, &m_ReloadTextColor);
+	 }
+
 }
 
 void GunUI::Init()
@@ -66,8 +68,8 @@ void GunUI::Init()
 	m_spBulletNunTex = std::make_shared<KdTexture>();
 	m_spBulletNunTex->Load("Asset/Textures/Object/UI/GunUI/ClipTex.png");
 
-	m_spReloadTex = std::make_shared<KdTexture>();
-	m_spReloadTex->Load("Asset/Textures/Object/UI/GunUI/ReloadTex.png");
+	m_spReloadText = std::make_shared<KdTexture>();
+	m_spReloadText->Load("Asset/Textures/Object/UI/GunUI/ReloadTex.png");
 
 	m_spMagazinTexTop = std::make_shared<KdTexture>();
 	m_spMagazinTexTop->Load("Asset/Textures/Object/UI/GunUI/MagTex.png");

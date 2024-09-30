@@ -17,6 +17,7 @@ private:
 
 
 	std::shared_ptr<KdTexture>  m_spTimeNumTex = nullptr;
+	std::shared_ptr<KdTexture>  m_spTimeColonTex = nullptr;
 
 	std::shared_ptr<KdTexture> m_spGoalBerTex = nullptr;
 	std::shared_ptr<KdTexture> m_spGoalBackTex = nullptr;

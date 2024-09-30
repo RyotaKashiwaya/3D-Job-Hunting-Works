@@ -39,9 +39,13 @@ void GameUI::DrawSprite()
 		m_TimeRect = { 0 + ((long)(m_spTimeNumTex->GetWidth() / 10) * m_TimesScoreNum1),0,(long)(m_spTimeNumTex->GetWidth() / 10),(long)m_spTimeNumTex->GetHeight() };
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeNumTex, m_TimeUIPos.x, m_TimeUIPos.y, m_TimeRect.width, m_TimeRect.height,&m_TimeRect);
 		m_TimeRect = { 0 + ((long)(m_spTimeNumTex->GetWidth() / 10) * m_TimesScoreNum2),0,(long)(m_spTimeNumTex->GetWidth() / 10),(long)m_spTimeNumTex->GetHeight() };
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeNumTex, m_TimeUIPos.x + 40, m_TimeUIPos.y, m_TimeRect.width, m_TimeRect.height, &m_TimeRect);
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeNumTex, m_TimeUIPos.x + 50, m_TimeUIPos.y, m_TimeRect.width, m_TimeRect.height, &m_TimeRect);
 		m_TimeRect = { 0 + ((long)(m_spTimeNumTex->GetWidth() / 10) * m_TimesScoreNum3),0,(long)(m_spTimeNumTex->GetWidth() / 10),(long)m_spTimeNumTex->GetHeight() };
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeNumTex, m_TimeUIPos.x + 80, m_TimeUIPos.y, m_TimeRect.width, m_TimeRect.height, &m_TimeRect);
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeNumTex, m_TimeUIPos.x + 90, m_TimeUIPos.y, m_TimeRect.width, m_TimeRect.height, &m_TimeRect);
+	}
+	if (m_spTimeColonTex)
+	{
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_spTimeColonTex, m_TimeUIPos.x + 22, m_TimeUIPos.y+8);
 	}
 	if (m_spGoalBackTex)
 	{
@@ -68,6 +72,11 @@ void GameUI::DrawSprite()
 
 void GameUI::Init()
 {
+	if (!m_spTimeColonTex)
+	{
+		m_spTimeColonTex = std::make_shared<KdTexture>();
+		m_spTimeColonTex->Load("Asset/Textures/Object/UI/GameUI/TimeColon.png");
+	}
 	if (!m_spTimeNumTex)
 	{
 		m_spTimeNumTex = std::make_shared<KdTexture>();
@@ -99,8 +108,8 @@ void GameUI::Init()
 		m_spCarIconTex->Load("Asset/Textures/Object/UI/GameUI/CarIcon.png");
 	}
 
-	m_ScoreUIPos = {-330,300,0};
-	m_TimeUIPos = { -20,300,0 };;
+	m_ScoreUIPos = {-200,300,0};
+	m_TimeUIPos = { -600,310,0 };;
 }
 
 void GameUI::TimeCount()
