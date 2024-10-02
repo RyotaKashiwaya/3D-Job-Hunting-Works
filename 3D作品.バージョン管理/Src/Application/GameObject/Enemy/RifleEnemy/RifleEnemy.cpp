@@ -7,6 +7,8 @@ void RifleEnemy::Update()
 {
 	//Application::Instance().m_log.AddLog("DirX %d\n", m_moveDirForPop.x);
 
+	m_pDebugWire->AddDebugLine(m_pos + Math::Vector3(0, 3, 0), m_moveDirForPop, 100, kRedColor);
+
 	if (!IsPopDirection)
 	{
 		if (m_pos.z > m_PopEndPosZ)
@@ -104,6 +106,9 @@ void RifleEnemy::DrawLit()
 
 void RifleEnemy::Init()
 {
+
+	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
+
 	m_RandomGen = std::make_shared<KdRandomGenerator>();
 
 	m_PopEndPosZ = m_RandomGen->GetInt(100, 800);
