@@ -2,12 +2,15 @@
 #include"../../../Scene/SceneManager.h"
 #include"../../../GameObject/Enemy/EnemyManager.h"
 #include"../../../GameObject/Character/Character.h"
+#include"../../../GameObject/Enemy/RifleEnemy/Attack/RifleEnemyAttack.h"
 #include"../../../main.h"
 void RifleEnemy::Update()
 {
 	//Application::Instance().m_log.AddLog("DirX %d\n", m_moveDirForPop.x);
 
 	m_pDebugWire->AddDebugLine(m_pos + Math::Vector3(0, 3, 0), m_moveDirForPop, 100, kRedColor);
+
+	std::shared_ptr<Character> chara = m_wpChara.lock();
 
 	if (!IsPopDirection)
 	{
@@ -27,16 +30,16 @@ void RifleEnemy::Update()
 
 			if (m_IsAvoidance)
 			{
-				if (m_pos.x > 0 && m_wpChara.lock()->GetPos().x + m_distance > m_pos.x || m_pos.x < 0 && m_wpChara.lock()->GetPos().x - m_distance < m_pos.x)
+				if (m_pos.x > 0 && chara->GetPos().x + m_distance > m_pos.x || m_pos.x < 0 && chara->GetPos().x - m_distance < m_pos.x)
 				{
 
-					if (m_pos.x >= 0 && m_wpChara.lock()->GetPos().x + m_distance > m_pos.x)
+					if (m_pos.x >= 0 && chara->GetPos().x < m_pos.x)
 					{
 						m_speed = 1.7f;
 						m_moveDirPowForPop += 0.008f;
 					
 					}
-					if (m_pos.x <= 0 && m_wpChara.lock()->GetPos().x - m_distance < m_pos.x)
+					if (m_pos.x <= 0 && chara->GetPos().x > m_pos.x)
 					{
 						m_speed = 1.7f;
 						m_moveDirPowForPop -= 0.008f;
@@ -49,7 +52,7 @@ void RifleEnemy::Update()
 				}
 				else
 				{
-		
+
 					m_moveDirPowForPop = 0;
 
 					if (abs(m_moveDirForPop.x) > 0.1f)
@@ -83,7 +86,27 @@ void RifleEnemy::Update()
 		m_pos += m_moveDirForPop * m_speed;
 	}
 	
+	if (!keyFlg)
+	{
+		if (GetAsyncKeyState('U') & 0x8000)
+		{
+			keyFlg = true;
+			m_IsAttack = true;
+		}
+	}
+	else
+	{
+		keyFlg = false;
+	}
 
+	if (m_IsAttack)
+	{
+		m_IsAttack = false;
+		std::shared_ptr<RifleEnemyAttack> _attack = std::make_shared<RifleEnemyAttack>();
+		_attack->Shot(m_pos, chara->GetPos());
+		_attack->Init();
+		SceneManager::Instance().AddObject(_attack);
+	}
 }
 
 void RifleEnemy::PostUpdate()
@@ -111,7 +134,7 @@ void RifleEnemy::Init()
 
 	m_RandomGen = std::make_shared<KdRandomGenerator>();
 
-	m_PopEndPosZ = m_RandomGen->GetInt(100, 800);
+	m_PopEndPosZ = m_RandomGen->GetInt(-300, 800);
 
 	if (!m_spCarModel) 
 	{

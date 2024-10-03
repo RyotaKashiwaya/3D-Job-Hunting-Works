@@ -166,6 +166,7 @@
     <ClInclude Include="Src\Application\GameObject\Effect\ShotFire\ShotFire.h" />
     <ClInclude Include="Src\Application\GameObject\Enemy\EnemyBase.h" />
     <ClInclude Include="Src\Application\GameObject\Enemy\EnemyManager.h" />
+    <ClInclude Include="Src\Application\GameObject\Enemy\RifleEnemy\Attack\RifleEnemyAttack.h" />
     <ClInclude Include="Src\Application\GameObject\Enemy\RifleEnemy\RifleEnemy.h" />
     <ClInclude Include="Src\Application\GameObject\Map\Map.h" />
     <ClInclude Include="Src\Application\GameObject\Terrain\Building.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="Src\Application\GameObject\Effect\ShotFire\ShotFire.cpp" />
     <ClCompile Include="Src\Application\GameObject\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Enemy\EnemyManager.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Enemy\RifleEnemy\Attack\RifleEnemyAttack.cpp" />
     <ClCompile Include="Src\Application\GameObject\Enemy\RifleEnemy\RifleEnemy.cpp" />
     <ClCompile Include="Src\Application\GameObject\Map\Map.cpp" />
     <ClCompile Include="Src\Application\GameObject\Terrain\Building.cpp" />

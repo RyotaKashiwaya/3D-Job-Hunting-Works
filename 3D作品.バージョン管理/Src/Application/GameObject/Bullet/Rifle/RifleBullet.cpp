@@ -92,7 +92,7 @@ void RifleBullet::Init()
 	if (!m_spModel)
 	{
 		m_spModel = std::make_shared<KdModelWork>();
-		m_spModel->SetModelData("Asset/Models/Object/Weapon/Rifle/Bullet1.gltf");
+		m_spModel->SetModelData("Asset/Models/Object/Weapon/Rifle/Bullet.gltf");
 
 		m_pCollider = std::make_unique<KdCollider>();
 		m_pCollider->RegisterCollisionShape("Bullet", m_spModel, KdCollider::TypeDamage);

@@ -39,8 +39,14 @@ private:
 	Math::Vector3				 m_pos = {};
 	Math::Vector3				 m_moveDirForPop = {};
 	float						 m_moveDirPowForPop = 0;
-	const int					 m_distance = 100;
+	const int					 m_distance = 50;
 	float						 m_speed = {};
 	int							 m_PopEndPosZ = {};
 	Math::Vector3				 m_RotDir = {};
+
+	bool						 m_IsAttack = false;
+	int							 AttackCnt = 0;
+	int							 AttackCntNum = 0;
+
+	bool						 keyFlg = false;
 };
