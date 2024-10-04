@@ -70,6 +70,7 @@ void RifleEnemy::Update()
 					}
 					else
 					{
+						m_IsAttack = true;
 						m_speed = 4.5f;
 						m_moveDirForPop.x = 0;
 						m_mWorld = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(0));
@@ -85,27 +86,26 @@ void RifleEnemy::Update()
 		m_moveDirForPop.Normalize();
 		m_pos += m_moveDirForPop * m_speed;
 	}
-	
-	if (!keyFlg)
-	{
-		if (GetAsyncKeyState('U') & 0x8000)
-		{
-			keyFlg = true;
-			m_IsAttack = true;
-		}
-	}
-	else
-	{
-		keyFlg = false;
-	}
 
 	if (m_IsAttack)
 	{
-		m_IsAttack = false;
-		std::shared_ptr<RifleEnemyAttack> _attack = std::make_shared<RifleEnemyAttack>();
-		_attack->Shot(m_pos, chara->GetPos());
-		_attack->Init();
-		SceneManager::Instance().AddObject(_attack);
+		Application::Instance().m_log.AddLog("Cnt = %d \n", AttackCnt);
+		if (AttackCnt > AttackCntNum)
+		{
+			AttackCntNum = m_RandomGen->GetInt(10, 100);
+			AttackCnt = 0;
+
+			std::shared_ptr<RifleEnemyAttack> _attack = std::make_shared<RifleEnemyAttack>();
+			_attack->SetTarget(m_wpChara.lock());
+			_attack->Shot(m_pos, chara->GetPos());
+			_attack->Init();
+			SceneManager::Instance().AddObject(_attack);
+		}
+		else
+		{
+			AttackCnt++;
+		}
+
 	}
 }
 

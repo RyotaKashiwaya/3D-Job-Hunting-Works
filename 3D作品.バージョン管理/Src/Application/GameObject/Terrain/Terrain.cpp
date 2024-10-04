@@ -5,7 +5,7 @@ void Terrain::Init()
 	if (!m_spModel)
 	{
 		m_spModel = std::make_shared<KdModelWork>();
-		m_spModel->SetModelData("Asset/Models/Object/Terrain/Terrain1.gltf");
+		m_spModel->SetModelData("Asset/Models/Object/Terrain/Terrain.gltf");
 
 		m_pCollider = std::make_unique<KdCollider>();
 		m_pCollider->RegisterCollisionShape("Terrain", m_spModel, KdCollider::TypeGround );

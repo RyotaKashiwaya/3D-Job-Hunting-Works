@@ -46,7 +46,7 @@ private:
 
 	bool						 m_IsAttack = false;
 	int							 AttackCnt = 0;
-	int							 AttackCntNum = 0;
+	int							 AttackCntNum = 10;
 
 	bool						 keyFlg = false;
 };

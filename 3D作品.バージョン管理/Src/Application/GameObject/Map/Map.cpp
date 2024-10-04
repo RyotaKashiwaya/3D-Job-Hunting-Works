@@ -65,19 +65,19 @@ void Map::MakeBuilding()
 	Math::Vector3 _pos = m_pos;
 	if (_rot > 750)
 	{
-		_pos.x = 500;
+		_pos.x = 800;
 	}
 	else if(_rot > 500)
 	{
-		_pos.x = 800;
+		_pos.x = 1000;
 	}
 	else if (_rot > 250)
 	{
-		_pos.x = -500;
+		_pos.x = -800;
 	}
 	else 
 	{
-		_pos.x = -800;
+		_pos.x = -1000;
 	}
 	std::shared_ptr<Building> _building = std::make_shared<Building>();
 	_building->Init();

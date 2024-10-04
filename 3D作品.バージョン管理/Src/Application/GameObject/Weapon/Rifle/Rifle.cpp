@@ -32,37 +32,6 @@ void Rifle::Update()
 			//球発射
 			if (m_shotFlg)
 			{
-				////レイ判定用バラメーター
-				//KdCollider::RayInfo _rayinfo;
-
-				//_rayinfo.m_pos = _spParent->GetPos();
-				//_rayinfo.m_dir = _parentMat.Backward();
-				//_rayinfo.m_range = 1000.0f;
-				//_rayinfo.m_type = KdCollider::TypeDamage;
-
-				//std::list < KdCollider::CollisionResult> _resultList;
-
-				//for (auto& obj : SceneManager::Instance().GetObjList())
-				//{
-				//	obj->Intersects(_rayinfo, &_resultList);
-				//}
-
-				////衝突情報リストから一番遠いオブジェクトを検出
-				//bool _isHit = false;
-				//float maxOverlap = 0.0f;
-				//Math::Vector3 _hitPos = Math::Vector3::Zero;
-
-				////レイを飛ばす場合
-
-				//for (auto& _ray : _resultList)
-				//{
-				//	if (maxOverlap < _ray.m_overlapDistance)
-				//	{
-				//		maxOverlap = _ray.m_overlapDistance;
-				//		_hitPos = _ray.m_hitPos;
-				//		_isHit = true;
-				//	}
-				//}
 
 				Math::Vector3 ShotDir = m_mWorld.Backward();
 				Math::Matrix RandamRot;

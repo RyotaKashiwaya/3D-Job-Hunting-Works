@@ -6,6 +6,11 @@ void RifleEnemyAttack::Update()
 
 	m_Frame++;
 
+	if ((m_wpTarget.lock()->GetPos() - m_pos).Length() < HitDistance)
+	{
+		OnHit();
+	}
+
 	if (m_Frame == 60)
 	{
 		m_ExpiredCnt--;
@@ -24,7 +29,7 @@ void RifleEnemyAttack::Update()
 void RifleEnemyAttack::PostUpdate()
 {
 	m_transMat = Math::Matrix::CreateTranslation(m_pos);
-	m_ScaleMat = Math::Matrix::CreateScale(100);
+	m_ScaleMat = Math::Matrix::CreateScale(10);
 	m_mWorld = m_ScaleMat * m_rotMat * m_transMat;
 }
 
@@ -38,6 +43,8 @@ void RifleEnemyAttack::DrawLit()
 
 void RifleEnemyAttack::Init()
 {
+	
+
 	if (!m_spBullet)
 	{
 		m_spBullet = std::make_shared<KdModelWork>();
@@ -49,8 +56,19 @@ void RifleEnemyAttack::Init()
 
 void RifleEnemyAttack::Shot(Math::Vector3 _pos, Math::Vector3 _targetpos)
 {
-	m_pos = _pos;
+	m_RandomGen = std::make_shared<KdRandomGenerator>();
+
+	m_pos = _pos + m_Localpos;
 	m_dir = _targetpos - m_pos;
+
+	
+	Math::Matrix RandamRot = Math::Matrix::Identity;
+
+	float x = DirectX::XMConvertToRadians(m_RandomGen->GetFloat(-5.0f, 5.0f));
+	float y = DirectX::XMConvertToRadians(m_RandomGen->GetFloat(-5.0f, 5.0f));
+
+	RandamRot = Math::Matrix::CreateFromYawPitchRoll(y, x, 0);
+	m_dir = Math::Vector3::TransformNormal(m_dir, RandamRot);
 
 	m_dir.Normalize();
 
