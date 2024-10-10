@@ -4,6 +4,8 @@ class EnemyBase;
 class Rifle;
 class Character;
 
+#define MAXENEMYNUM = 5;
+
 class EnemyManeger :public KdGameObject
 {
 public:
@@ -29,5 +31,5 @@ private:
 	std::vector<std::shared_ptr<EnemyBase>> m_enemyList;
 
 	int							_nowTotalEnemy = 0; 
-
+	static const int			MaxEnemyNum = 1;
 };

@@ -46,7 +46,12 @@ private:
 
 	bool						 m_IsAttack = false;
 	int							 AttackCnt = 0;
-	int							 AttackCntNum = 10;
+	int							 AttackCntNum = 3;
+
+	int							 bulletCnt = 0;
+	int							 bulletCntNum = 3;
 
 	bool						 keyFlg = false;
+
+	int							 Flame = {};
 };

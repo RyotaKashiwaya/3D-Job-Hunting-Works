@@ -6,6 +6,7 @@
 #include"../../../main.h"
 void RifleEnemy::Update()
 {
+
 	//Application::Instance().m_log.AddLog("DirX %d\n", m_moveDirForPop.x);
 
 	m_pDebugWire->AddDebugLine(m_pos + Math::Vector3(0, 3, 0), m_moveDirForPop, 100, kRedColor);
@@ -17,6 +18,7 @@ void RifleEnemy::Update()
 		if (m_pos.z > m_PopEndPosZ)
 		{
 			IsPopDirection = true;
+			m_IsAttack = true;
 		}
 		else
 		{
@@ -70,7 +72,6 @@ void RifleEnemy::Update()
 					}
 					else
 					{
-						m_IsAttack = true;
 						m_speed = 4.5f;
 						m_moveDirForPop.x = 0;
 						m_mWorld = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(0));
@@ -92,9 +93,8 @@ void RifleEnemy::Update()
 		Application::Instance().m_log.AddLog("Cnt = %d \n", AttackCnt);
 		if (AttackCnt > AttackCntNum)
 		{
-			AttackCntNum = m_RandomGen->GetInt(10, 100);
+			AttackCntNum = m_RandomGen->GetInt(5,50);
 			AttackCnt = 0;
-
 			std::shared_ptr<RifleEnemyAttack> _attack = std::make_shared<RifleEnemyAttack>();
 			_attack->SetTarget(m_wpChara.lock());
 			_attack->Shot(m_pos, chara->GetPos());

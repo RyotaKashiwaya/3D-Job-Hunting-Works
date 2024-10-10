@@ -49,9 +49,10 @@ void RifleEnemyAttack::Init()
 	{
 		m_spBullet = std::make_shared<KdModelWork>();
 		m_spBullet->SetModelData("Asset/Models/Object/Enemy/RifleEnemy/Bullet.gltf");
+		m_mWorld = Math::Matrix::CreateScale(0.1f);
 	}
 
-	m_speed = 10.0f;
+	m_speed = 60.0f;
 }
 
 void RifleEnemyAttack::Shot(Math::Vector3 _pos, Math::Vector3 _targetpos)
