@@ -22,7 +22,8 @@ protected:
 	std::shared_ptr<KdModelWork> m_spCarModel = nullptr;
 	std::shared_ptr<KdModelWork> m_spHumanModel = nullptr;
 
-
+	std::shared_ptr<KdModelWork> m_spWeaponModel = nullptr;
+	Math::Matrix				 m_weaponMat = Math::Matrix::Identity;
 
 	bool						IsPopDirection = false;
 };

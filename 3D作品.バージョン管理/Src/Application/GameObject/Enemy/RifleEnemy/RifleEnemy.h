@@ -25,10 +25,17 @@ public:
 
 	void SetPos(Math::Vector3 _pos) { m_pos = _pos; }
 
+	void WeaponRotate();
 private:
+
+
 
 	Math::Matrix			m_tramsMat = Math::Matrix::Identity;
 	Math::Matrix			m_rotMat = Math::Matrix::Identity;
+
+	Math::Matrix			m_weapomTrans = Math::Matrix::Identity;
+	Math::Matrix			m_weapomLocal = Math::Matrix::Identity;
+	Math::Matrix			m_weapomRot = Math::Matrix::Identity;
 
 	std::weak_ptr<Character> m_wpChara;
 

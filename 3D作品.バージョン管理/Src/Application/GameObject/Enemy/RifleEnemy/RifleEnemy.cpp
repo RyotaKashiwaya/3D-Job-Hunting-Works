@@ -113,6 +113,11 @@ void RifleEnemy::PostUpdate()
 {
 	m_tramsMat = Math::Matrix::CreateTranslation(m_pos);
 	m_mWorld = m_rotMat * m_tramsMat;
+
+	WeaponRotate();
+	m_weapomTrans = m_weapomLocal * m_mWorld;
+
+	m_weaponMat = m_weapomRot * m_weapomTrans;
 }
 
 void RifleEnemy::DrawLit()
@@ -124,6 +129,10 @@ void RifleEnemy::DrawLit()
 	if (m_spHumanModel)
 	{
 		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spHumanModel, m_mWorld);
+	}
+	if (m_spWeaponModel)
+	{
+		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spWeaponModel, m_weaponMat);
 	}
 }
 
@@ -147,6 +156,14 @@ void RifleEnemy::Init()
 		m_spHumanModel = std::make_shared<KdModelWork>();
 		m_spHumanModel->SetModelData("Asset/Models/Object/Enemy/Enemy.gltf");
 	}
+
+	if (!m_spWeaponModel)
+	{
+		m_spWeaponModel = std::make_shared<KdModelWork>();
+		m_spWeaponModel->SetModelData("Asset/Models/Object/Enemy/RifleEnemy/Rifle/Rifle.gltf");
+	}
+
+	m_weapomLocal = Math::Matrix::CreateTranslation({ 0,10,1 });
 
 	m_pCollider = std::make_unique<KdCollider>();
 	m_pCollider->RegisterCollisionShape("Enemy", m_spHumanModel, KdCollider::TypeDamage);
@@ -197,4 +214,41 @@ void RifleEnemy::CarRotate()
 void RifleEnemy::OnHit()
 {
 	m_isExpired = true;
+}
+
+void RifleEnemy::WeaponRotate()
+{
+	std::shared_ptr<Character> _spChara = m_wpChara.lock();
+
+	Math::Vector3	_dir = _spChara->GetPos() - m_pos;
+
+	_dir.Normalize();
+
+	//レティクルへのベクトルと弾への信仰ベクトルから弾の向き(回転行列)を作成
+
+	//①　ベクトルA ・・・現在の進行ベクトル
+
+	Math::Vector3 _vecA = m_weaponMat.Backward();
+	_vecA.Normalize();
+
+
+	//②　ベクトルB ・・・照準への進行ベクトル
+	Math::Vector3 _vecB = m_moveDirForPop;
+	_vecB.Normalize();
+
+	//①と②のベクトルの内積値から角度を算出
+	float _dot = _vecA.Dot(_vecB);				//内積値を算出
+	float _angle = acos(_dot);					//内積で取得したcos値から2つのベクトルの角度を算出
+
+	//①と②の外積を利用して、回転するためのベクトル(回転軸)を作成
+	Math::Vector3 _rotAxis = _vecA.Cross(_vecB);
+
+	//内積で算出した角度分、外積で算出したベクトル(回転軸)で回転する行列を作成
+	//＝弾がレティクルの方向を向く
+
+	if (_vecA != _vecB)
+	{
+		m_weapomRot = Math::Matrix::CreateFromAxisAngle(_rotAxis, _angle);
+	}
+
 }

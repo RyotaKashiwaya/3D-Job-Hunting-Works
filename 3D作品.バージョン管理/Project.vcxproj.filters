@@ -133,9 +133,6 @@
     <Filter Include="Src\Application\GameObject\Enemy\RifleEnemy\Attack">
       <UniqueIdentifier>{794cac1b-e46e-4ab9-8685-5279a5f37170}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\GameObject\Enemy\RifleEnemy\Weapon">
-      <UniqueIdentifier>{5947ae46-b95d-4ecd-af7e-741d5cc8dcf2}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -366,9 +363,6 @@
     <ClInclude Include="Src\Application\GameObject\Enemy\RifleEnemy\Attack\RifleEnemyAttack.h">
       <Filter>Src\Application\GameObject\Enemy\RifleEnemy\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\GameObject\Enemy\RifleEnemy\Weapon\RifleEnemyWeapon.h">
-      <Filter>Src\Application\GameObject\Enemy\RifleEnemy\Weapon</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -571,9 +565,6 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Enemy\RifleEnemy\Attack\RifleEnemyAttack.cpp">
       <Filter>Src\Application\GameObject\Enemy\RifleEnemy\Attack</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\GameObject\Enemy\RifleEnemy\Weapon\RifleEnemyWeapon.cpp">
-      <Filter>Src\Application\GameObject\Enemy\RifleEnemy\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
