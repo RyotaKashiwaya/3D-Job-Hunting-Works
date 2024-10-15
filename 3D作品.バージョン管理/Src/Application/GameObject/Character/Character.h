@@ -28,6 +28,8 @@ public:
 	//	m_wpCamera = camera;
 	//}
 
+	void OnHit()override;
+
 private:
 	//親(持ち主)の情報
 	std::weak_ptr<KdGameObject> m_wpParent;

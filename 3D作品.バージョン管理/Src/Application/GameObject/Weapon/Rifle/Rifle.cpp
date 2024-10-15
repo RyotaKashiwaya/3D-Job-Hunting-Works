@@ -55,6 +55,8 @@ void Rifle::Update()
 
 				std::shared_ptr<ShotFire> _fireEffect = std::make_shared<ShotFire>();
 				_fireEffect->SetPos(_mzzlePos);
+				_fireEffect->SetScale();
+				_fireEffect->SetRotY();
 				_fireEffect->Shot(_mzzlePos, ShotDir);
 				_fireEffect->Init();
 

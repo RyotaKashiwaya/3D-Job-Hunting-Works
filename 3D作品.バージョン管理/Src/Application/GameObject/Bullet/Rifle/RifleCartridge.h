@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-class Rifle;
+
 
 class RifleCartridge :public KdGameObject
 {

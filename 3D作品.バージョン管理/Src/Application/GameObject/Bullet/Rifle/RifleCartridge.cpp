@@ -1,5 +1,4 @@
 ﻿#include "RifleCartridge.h"
-#include"../../../GameObject/Weapon/Rifle/Rifle.h"
 void RifleCartridge::Update()
 {
 

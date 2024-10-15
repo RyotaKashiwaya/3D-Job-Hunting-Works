@@ -33,9 +33,13 @@ private:
 	Math::Matrix			m_tramsMat = Math::Matrix::Identity;
 	Math::Matrix			m_rotMat = Math::Matrix::Identity;
 
-	Math::Matrix			m_weapomTrans = Math::Matrix::Identity;
 	Math::Matrix			m_weapomLocal = Math::Matrix::Identity;
+	Math::Matrix			m_weapomTrans = Math::Matrix::Identity;
+	Math::Matrix			m_weapomScale = Math::Matrix::Identity;
 	Math::Matrix			m_weapomRot = Math::Matrix::Identity;
+
+	Math::Matrix			m_WeaponMazzleMat = Math::Matrix::Identity;
+	Math::Vector3			m_WeaponMazzlePos = Math::Vector3::Zero;
 
 	std::weak_ptr<Character> m_wpChara;
 

@@ -11,7 +11,7 @@ void ShotFire::Update()
 	m_spAnimator->AdvanceTime(m_spModel->WorkNodes());
 	m_spModel->CalcNodeMatrices();
 
-	m_mWorld = m_scaleMat *m_rotMat * m_rotBulletMat  * m_tramsMat;
+	m_mWorld = m_scaleMat * m_rotMat * m_rotBulletMat * m_tramsMat;
 }
 
 
@@ -38,7 +38,7 @@ void ShotFire::Init()
 		m_spModel = std::make_shared<KdModelWork>();
 		m_spModel->SetModelData("Asset/Models/Object/Effect/MuzzleFlash/scene.gltf");
 
-		//書記のアニメーションをセットする
+		//初期のアニメーションをセットする
 		m_spAnimator = std::make_shared<KdAnimator>();
 		m_spAnimator->SetAnimation(m_spModel->GetData()->GetAnimation("scene"));
 	}
@@ -46,6 +46,7 @@ void ShotFire::Init()
 	m_tramsMat = Math::Matrix::CreateTranslation(m_pos);
 	m_scaleMat = Math::Matrix::CreateScale(m_Scele);
 	int _rot = m_RandomGen->GetInt(0, 360);
+	m_rotMat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_rotY));
 	m_rotMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(_rot));
 
 	m_mWorld = m_scaleMat * m_rotBulletMat * m_tramsMat;

@@ -21,26 +21,11 @@ void Character::Update()
 
 	m_moveDir = Math::Vector3::Zero;
 
-	//if (GetAsyncKeyState('D')) { m_moveDir.x +=  1.0f; }
-	//if (GetAsyncKeyState('A')) { m_moveDir.x += -1.0f; }
-	//if (GetAsyncKeyState('W')) { m_moveDir.z +=  1.0f; }
-	//if (GetAsyncKeyState('S')) { m_moveDir.z += -1.0f; }
-
 	if (!(GetAsyncKeyState(VK_LSHIFT) & 0x8000))
 	{
 		UpdateRotateByMouse();
 	}
 
-	//ジャンプ
-	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
-	{
-		m_pos.y += 0.5;
-	}
-
-	if (GetAsyncKeyState(VK_LCONTROL) & 0x8000)
-	{
-		m_pos.y -= 0.5;
-	}
 
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
@@ -64,12 +49,6 @@ void Character::Update()
 		FireTimeCnt = 0;
 	}
 
-
-	//const std::shared_ptr<const CameraBase> _spCamera = m_wpCamera.lock();
-	//if (_spCamera)
-	//{
-	//	m_moveDir = m_moveDir.TransformNormal(m_moveDir, _spCamera->GetRotationYMatrix());
-	//}
 	m_moveDir = m_moveDir.TransformNormal(m_moveDir, GetRotationYMatrix());
 
 	m_moveDir.Normalize();
@@ -84,6 +63,11 @@ void Character::Update()
 }
 
 void Character::PostUpdate()
+{
+
+}
+
+void Character::OnHit()
 {
 
 }

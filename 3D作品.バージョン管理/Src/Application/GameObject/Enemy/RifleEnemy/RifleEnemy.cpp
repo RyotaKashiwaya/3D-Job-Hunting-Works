@@ -2,7 +2,8 @@
 #include"../../../Scene/SceneManager.h"
 #include"../../../GameObject/Enemy/EnemyManager.h"
 #include"../../../GameObject/Character/Character.h"
-#include"../../../GameObject/Enemy/RifleEnemy/Attack/RifleEnemyAttack.h"
+#include"../../../GameObject/Camera/FPSCamera/FPSCamera.h"
+#include"../../../GameObject/Effect/ShotFire/ShotFire.h"
 #include"../../../main.h"
 void RifleEnemy::Update()
 {
@@ -88,18 +89,34 @@ void RifleEnemy::Update()
 		m_pos += m_moveDirForPop * m_speed;
 	}
 
+	m_WeaponMazzlePos = (m_WeaponMazzleMat * m_weaponMat).Translation();
+
+	Math::Vector3	_dir = chara->GetPos() - m_WeaponMazzlePos;
+	_dir.y = 0;
+	_dir.Normalize();
+
+	m_pDebugWire->AddDebugSphere(m_WeaponMazzlePos, 3, kGreenColor);
+	m_pDebugWire->AddDebugLine(m_WeaponMazzlePos, _dir, 500, kBlueColor);
+
 	if (m_IsAttack)
 	{
 		Application::Instance().m_log.AddLog("Cnt = %d \n", AttackCnt);
 		if (AttackCnt > AttackCntNum)
 		{
-			AttackCntNum = m_RandomGen->GetInt(5,50);
+			AttackCntNum = m_RandomGen->GetInt(3,20);
 			AttackCnt = 0;
-			std::shared_ptr<RifleEnemyAttack> _attack = std::make_shared<RifleEnemyAttack>();
-			_attack->SetTarget(m_wpChara.lock());
-			_attack->Shot(m_pos, chara->GetPos());
-			_attack->Init();
-			SceneManager::Instance().AddObject(_attack);
+			std::shared_ptr<ShotFire> _effect = std::make_shared<ShotFire>();
+			_effect->SetPos(m_WeaponMazzlePos);
+			_effect->SetScale(0.1);
+			_effect->SetRotY(180);
+			_effect->Shot(m_WeaponMazzlePos, -_dir);
+			_effect->Init();
+			SceneManager::Instance().AddObject(_effect);
+
+			if (m_RandomGen->GetInt(0, 500) > 400)
+			{
+				m_wpChara.lock()->OnHit();
+			}
 		}
 		else
 		{
@@ -115,9 +132,9 @@ void RifleEnemy::PostUpdate()
 	m_mWorld = m_rotMat * m_tramsMat;
 
 	WeaponRotate();
-	m_weapomTrans = m_weapomLocal * m_mWorld;
+	
 
-	m_weaponMat = m_weapomRot * m_weapomTrans;
+	m_weaponMat = m_weapomScale * m_weapomRot * m_weapomLocal * m_mWorld;
 }
 
 void RifleEnemy::DrawLit()
@@ -161,9 +178,17 @@ void RifleEnemy::Init()
 	{
 		m_spWeaponModel = std::make_shared<KdModelWork>();
 		m_spWeaponModel->SetModelData("Asset/Models/Object/Enemy/RifleEnemy/Rifle/Rifle.gltf");
+		m_weapomScale = Math::Matrix::CreateScale(4);
 	}
 
-	m_weapomLocal = Math::Matrix::CreateTranslation({ 0,10,1 });
+	m_weapomLocal = Math::Matrix::CreateTranslation({ 4,20,0 });
+
+	const	KdModelWork::Node* _pMuzzleNode = m_spWeaponModel->FindNode("MuzzlePoint");
+
+	if (_pMuzzleNode)
+	{
+		m_WeaponMazzleMat = _pMuzzleNode->m_worldTransform ;
+	}
 
 	m_pCollider = std::make_unique<KdCollider>();
 	m_pCollider->RegisterCollisionShape("Enemy", m_spHumanModel, KdCollider::TypeDamage);
@@ -218,23 +243,29 @@ void RifleEnemy::OnHit()
 
 void RifleEnemy::WeaponRotate()
 {
-	std::shared_ptr<Character> _spChara = m_wpChara.lock();
 
+	std::shared_ptr<Character> _spChara = m_wpChara.lock();
+	
 	Math::Vector3	_dir = _spChara->GetPos() - m_pos;
 
+	_dir.y = 0;
+
 	_dir.Normalize();
+
 
 	//レティクルへのベクトルと弾への信仰ベクトルから弾の向き(回転行列)を作成
 
 	//①　ベクトルA ・・・現在の進行ベクトル
 
-	Math::Vector3 _vecA = m_weaponMat.Backward();
+	Math::Vector3 _vecA = m_mWorld.Backward();
 	_vecA.Normalize();
 
 
 	//②　ベクトルB ・・・照準への進行ベクトル
-	Math::Vector3 _vecB = m_moveDirForPop;
+	Math::Vector3 _vecB = _dir;
 	_vecB.Normalize();
+
+	m_pDebugWire->AddDebugLine(m_pos, _dir, 50, kRedColor);
 
 	//①と②のベクトルの内積値から角度を算出
 	float _dot = _vecA.Dot(_vecB);				//内積値を算出
