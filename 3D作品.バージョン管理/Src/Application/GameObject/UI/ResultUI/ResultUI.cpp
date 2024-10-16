@@ -2,6 +2,10 @@
 #include"../../../Scene/SceneManager.h"
 void ResultUI::Update()
 {
+	m_TimeRectNum1 = GameScore % 10;
+	m_TimeRectNum2 = (GameScore / 10) % 6;
+	m_TimeRectNum1 = (GameScore / 60) % 10;
+
 	if (ScoreDisplayTime > 0)
 	{
 		ScoreDisplayTime--;
@@ -28,6 +32,18 @@ void ResultUI::DrawSprite()
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeColonTex, m_timePos.x, m_timePos.y, nullptr, &m_timeColor);
 	}
 
+	if (m_scoreTimeTex)
+	{
+		m_timeRect = { (long)(0 + (m_scoreTimeTex->GetWidth() / 10 * m_TimeRectNum1)),0,(long)m_scoreTimeTex->GetWidth() / 10 ,(long)m_scoreTimeTex->GetHeight() / 10 };
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeColonTex, m_timePos.x - 80, m_timePos.y, m_timeRect.x, m_timeRect.y, &m_timeRect, &m_timeColor);
+
+		m_timeRect = { (long)(0 + (m_scoreTimeTex->GetWidth() / 10 * m_TimeRectNum2)),0,(long)m_scoreTimeTex->GetWidth() / 10 ,(long)m_scoreTimeTex->GetHeight() / 10 };
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeColonTex, m_timePos.x + 80, m_timePos.y, m_timeRect.x, m_timeRect.y, &m_timeRect, &m_timeColor);
+
+		m_timeRect = { (long)(0 + (m_scoreTimeTex->GetWidth() / 10 * m_TimeRectNum3)),0,(long)m_scoreTimeTex->GetWidth() / 10 ,(long)m_scoreTimeTex->GetHeight() / 10 };
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeColonTex, m_timePos.x + 160, m_timePos.y, m_timeRect.x, m_timeRect.y, &m_timeRect, &m_timeColor);
+	}
+
 }
 
 void ResultUI::Init()
@@ -47,19 +63,10 @@ void ResultUI::Init()
 		m_scoreTimeColonTex = std::make_shared<KdTexture>();
 		m_scoreTimeColonTex->Load("Asset/Textures/Scene/Result/timeColon.png");
 	}
-	if (!m_scoreTimeTex1)
+	if (!m_scoreTimeTex)
 	{
-		m_scoreTimeTex1 = std::make_shared<KdTexture>();
-		m_scoreTimeTex1->Load("Asset/Textures/Scene/Result/timeNum.png");
+		m_scoreTimeTex = std::make_shared<KdTexture>();
+		m_scoreTimeTex->Load("Asset/Textures/Scene/Result/timeNum.png");
 	}
-	if (!m_scoreTimeTex2)
-	{
-		m_scoreTimeTex2 = std::make_shared<KdTexture>();
-		m_scoreTimeTex2->Load("Asset/Textures/Scene/Result/timeNum.png");
-	}
-	if (!m_scoreTimeTex3)
-	{
-		m_scoreTimeTex3 = std::make_shared<KdTexture>();
-		m_scoreTimeTex3->Load("Asset/Textures/Scene/Result/timeNum.png");
-	}
+
 }

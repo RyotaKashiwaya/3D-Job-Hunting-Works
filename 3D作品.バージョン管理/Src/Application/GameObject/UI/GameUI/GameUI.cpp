@@ -10,7 +10,7 @@ void GameUI::Update()
 
 	if (!IsNowHit)
 	{
-		if (m_rectNum == 100)
+		if (m_rectNum == 5)
 		{
 			SceneManager::Instance().TransferData(m_time);
 			SceneManager::Instance().SetNextScene(SceneManager::SceneType::Result);

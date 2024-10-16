@@ -29,9 +29,7 @@ private:
 	int						   m_TimeRectNum2 = 0;
 	int						   m_TimeRectNum3 = 0;
 
-	std::shared_ptr<KdTexture> m_scoreTimeTex1 = nullptr;
-	std::shared_ptr<KdTexture> m_scoreTimeTex2 = nullptr;
-	std::shared_ptr<KdTexture> m_scoreTimeTex3 = nullptr;
+	std::shared_ptr<KdTexture> m_scoreTimeTex = nullptr;
 
 	std::shared_ptr<KdTexture> m_scoreTimeColonTex = nullptr;
 
