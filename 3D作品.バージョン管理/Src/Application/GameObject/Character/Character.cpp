@@ -4,6 +4,7 @@
 #include "../Camera/CameraBase.h"
 #include"../../Scene/SceneManager.h"
 #include"../../GameObject/Weapon/WeaponBase.h"
+#include"../../GameObject/UI/GameUI/GameUI.h"
 
 void Character::Init()
 {
@@ -69,7 +70,11 @@ void Character::PostUpdate()
 
 void Character::OnHit()
 {
-
+	std::shared_ptr<GameUI> _ui = m_wpGameUI.lock();
+	if (_ui)
+	{
+		_ui->TimeStopForHit();
+	}
 }
 
 

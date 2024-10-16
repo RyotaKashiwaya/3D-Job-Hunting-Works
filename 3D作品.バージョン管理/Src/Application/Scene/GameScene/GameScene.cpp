@@ -115,6 +115,7 @@ void GameScene::Init()
 	map->SetChara(character);
 	character->SetWeapon(gun);
 	character->SetParent(car);
+	character->SetGameUI(gameUI);
 	camera->SetTarget(character);
 	camera->SetWeapon(gun);
 	gun->SetParent(character);

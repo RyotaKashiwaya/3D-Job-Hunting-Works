@@ -13,8 +13,10 @@ public:
 	void Init()override;
 
 	void TimeCount();
-private:
 
+	void TimeStopForHit();
+private:
+	std::shared_ptr<KdRandomGenerator>	m_RandomGen;
 
 	std::shared_ptr<KdTexture>  m_spTimeNumTex = nullptr;
 	std::shared_ptr<KdTexture>  m_spTimeColonTex = nullptr;
@@ -44,4 +46,9 @@ private:
 	int						   m_TimesScoreNum1 = {};
 	int						   m_TimesScoreNum2 = {};
 	int						   m_TimesScoreNum3 = {};
+
+	bool					   IsNowHit = false;
+	int						   StopTimeCnt = 0;
+	int						   StopTimeNum = 0;
+
 };

@@ -113,7 +113,7 @@ void RifleEnemy::Update()
 			_effect->Init();
 			SceneManager::Instance().AddObject(_effect);
 
-			if (m_RandomGen->GetInt(0, 500) > 400)
+			if (m_RandomGen->GetInt(0, 500) > 450)
 			{
 				m_wpChara.lock()->OnHit();
 			}

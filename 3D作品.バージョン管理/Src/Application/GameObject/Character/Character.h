@@ -2,6 +2,7 @@
 
 class CameraBase;
 class WeaponBase;
+class GameUI;
 
 class Character : public KdGameObject
 {
@@ -23,6 +24,11 @@ public:
 		m_wpWeapon = weapon;
 	}
 
+	void SetGameUI(std::shared_ptr< GameUI>& _ptr)
+	{
+		m_wpGameUI = _ptr;
+	}
+
 	//void SetCamera(const std::shared_ptr<CameraBase>& camera)
 	//{
 	//	m_wpCamera = camera;
@@ -33,6 +39,8 @@ public:
 private:
 	//親(持ち主)の情報
 	std::weak_ptr<KdGameObject> m_wpParent;
+
+	std::weak_ptr<GameUI> m_wpGameUI;
 
 	Math::Matrix				m_ParentTrans = Math::Matrix::Identity;
 

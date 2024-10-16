@@ -133,6 +133,12 @@
     <Filter Include="Src\Application\GameObject\Enemy\RifleEnemy\Attack">
       <UniqueIdentifier>{794cac1b-e46e-4ab9-8685-5279a5f37170}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Scene\ResultScene">
+      <UniqueIdentifier>{7cabb6c5-9777-4f30-98cd-9e38c2cf86a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\GameObject\UI\ResultUI">
+      <UniqueIdentifier>{65e7f248-ae73-4387-b3bd-4532a9a25de8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -363,6 +369,12 @@
     <ClInclude Include="Src\Application\GameObject\Enemy\RifleEnemy\Attack\RifleEnemyAttack.h">
       <Filter>Src\Application\GameObject\Enemy\RifleEnemy\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Scene\ResultScene\ResultScene.h">
+      <Filter>Src\Application\Scene\ResultScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\UI\ResultUI\ResultUI.h">
+      <Filter>Src\Application\GameObject\UI\ResultUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -565,6 +577,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Enemy\RifleEnemy\Attack\RifleEnemyAttack.cpp">
       <Filter>Src\Application\GameObject\Enemy\RifleEnemy\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\ResultScene\ResultScene.cpp">
+      <Filter>Src\Application\Scene\ResultScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\UI\ResultUI\ResultUI.cpp">
+      <Filter>Src\Application\GameObject\UI\ResultUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,7 @@ public :
 	{
 		Title,
 		Game,
+		Result
 	};
 
 	void PreUpdate();
@@ -21,6 +22,15 @@ public :
 	void Draw();
 	void DrawSprite();
 	void DrawDebug();
+
+	//シーン間情報受け渡し用
+	void TransferData(int _data);
+	void TransferData(float _data);
+	void TransferData(bool _data);
+
+	//シーン間データゲッター　引数...　0:int型データ 1:bool型データ それ以外はNULL
+	int GatData(int num);
+	//
 
 	// 次のシーンをセット (次のフレームから切り替わる)
 	void SetNextScene(SceneType nextScene)
@@ -55,6 +65,12 @@ private :
 	
 	// 次のシーンの種類を保持している変数
 	SceneType m_nextSceneType = m_currentSceneType;
+
+	//シーン間情報受け渡し用
+	int							intData = {};
+	float						floatData = {};
+	bool						boolData = {};
+	//
 
 private:
 

@@ -8,32 +8,50 @@ void GameUI::Update()
 
 	TimeCount();
 
-	if (m_rectNum == 100)
+	if (!IsNowHit)
 	{
-		SceneManager::Instance().SetNextScene(SceneManager::SceneType::Title);
-	}
+		if (m_rectNum == 100)
+		{
+			SceneManager::Instance().TransferData(m_time);
+			SceneManager::Instance().SetNextScene(SceneManager::SceneType::Result);
+		}
 
-	if (m_ScoreRect == (m_RemainingGoal * 60) / 100)
-	{
-		m_rectNum++;
-		m_ScoreRect = 0;
+		if (m_ScoreRect == (m_RemainingGoal * 60) / 100)
+		{
+			m_rectNum++;
+			m_ScoreRect = 0;
+		}
+		else
+		{
+			m_ScoreRect++;
+		}
+
+		if (m_iconPivotY > 0.55f || m_iconPivotY < 0.45f)
+		{
+			m_iconMoveDir.y *= -1;
+		}
+
+		m_iconPivotY += m_iconMoveDir.y * m_iconMoveSpeed;
 	}
 	else
 	{
-		m_ScoreRect++;
+		if (StopTimeCnt < StopTimeNum)
+		{
+			StopTimeCnt++;
+		}
+		else
+		{
+			StopTimeCnt = 0;
+			IsNowHit = false;
+		}
 	}
-
-	if (m_iconPivotY > 0.55f || m_iconPivotY < 0.45f)
-	{
-		m_iconMoveDir.y *= -1;
-	}
-
-	m_iconPivotY += m_iconMoveDir.y * m_iconMoveSpeed;
-
 }
 
 void GameUI::DrawSprite()
 {
+	m_RandomGen = std::make_shared<KdRandomGenerator>();
+
+
 	if (m_spTimeNumTex)
 	{
 		m_TimeRect = { 0 + ((long)(m_spTimeNumTex->GetWidth() / 10) * m_TimesScoreNum1),0,(long)(m_spTimeNumTex->GetWidth() / 10),(long)m_spTimeNumTex->GetHeight() };
@@ -72,6 +90,8 @@ void GameUI::DrawSprite()
 
 void GameUI::Init()
 {
+	
+
 	if (!m_spTimeColonTex)
 	{
 		m_spTimeColonTex = std::make_shared<KdTexture>();
@@ -129,4 +149,11 @@ void GameUI::TimeCount()
 		m_timeCnt++;
 	}
 
+}
+
+void GameUI::TimeStopForHit()
+{
+	if (IsNowHit)return;
+	IsNowHit = true;
+	StopTimeNum = m_RandomGen->GetInt(60, 300);
 }

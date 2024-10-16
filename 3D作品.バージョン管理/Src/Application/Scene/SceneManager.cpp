@@ -45,6 +45,40 @@ void SceneManager::DrawDebug()
 	m_currentScene->DrawDebug();
 }
 
+void SceneManager::TransferData(int _data)
+{
+	intData = {};
+	intData = _data;
+}
+
+void SceneManager::TransferData(float _data)
+{
+	floatData = {};
+	floatData = _data;
+}
+
+void SceneManager::TransferData(bool _data)
+{
+	boolData = {};
+	boolData = _data;
+}
+
+int SceneManager::GatData(int num)
+{
+	switch (num)
+	{
+	case 0:
+		return intData;
+		break;
+	case 1:
+		return boolData;
+		break;
+	default:
+		return NULL;
+		break;
+	}
+}
+
 const std::list<std::shared_ptr<KdGameObject>>& SceneManager::GetObjList()
 {
 	return m_currentScene->GetObjList();
