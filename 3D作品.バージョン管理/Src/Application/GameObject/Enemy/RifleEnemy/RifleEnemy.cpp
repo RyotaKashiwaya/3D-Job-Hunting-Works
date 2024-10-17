@@ -113,6 +113,8 @@ void RifleEnemy::Update()
 			_effect->Init();
 			SceneManager::Instance().AddObject(_effect);
 
+			KdAudioManager::Instance().Play("Asset/Sounds/GameObject/Weapon/Rifle/Shot.wav")->SetVolume(0.05f);
+
 			if (m_RandomGen->GetInt(0, 500) > 450)
 			{
 				m_wpChara.lock()->OnHit();

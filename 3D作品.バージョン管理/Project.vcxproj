@@ -163,6 +163,7 @@
     <ClInclude Include="Src\Application\GameObject\Camera\CameraBase.h" />
     <ClInclude Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.h" />
     <ClInclude Include="Src\Application\GameObject\Character\Character.h" />
+    <ClInclude Include="Src\Application\GameObject\Effect\Explosion\Explosion.h" />
     <ClInclude Include="Src\Application\GameObject\Effect\ShotFire\ShotFire.h" />
     <ClInclude Include="Src\Application\GameObject\Enemy\EnemyBase.h" />
     <ClInclude Include="Src\Application\GameObject\Enemy\EnemyManager.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="Src\Application\GameObject\Camera\CameraBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Camera\FPSCamera\FPSCamera.cpp" />
     <ClCompile Include="Src\Application\GameObject\Character\Character.cpp" />
+    <ClCompile Include="Src\Application\GameObject\Effect\Explosion\Explosion.cpp" />
     <ClCompile Include="Src\Application\GameObject\Effect\ShotFire\ShotFire.cpp" />
     <ClCompile Include="Src\Application\GameObject\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Src\Application\GameObject\Enemy\EnemyManager.cpp" />

@@ -139,6 +139,9 @@
     <Filter Include="Src\Application\GameObject\UI\ResultUI">
       <UniqueIdentifier>{65e7f248-ae73-4387-b3bd-4532a9a25de8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Effect\Explosion">
+      <UniqueIdentifier>{c035a246-d33c-46a8-8f7e-304c01e178c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -375,6 +378,9 @@
     <ClInclude Include="Src\Application\GameObject\UI\ResultUI\ResultUI.h">
       <Filter>Src\Application\GameObject\UI\ResultUI</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Effect\Explosion\Explosion.h">
+      <Filter>Src\Application\GameObject\Effect\Explosion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -583,6 +589,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\UI\ResultUI\ResultUI.cpp">
       <Filter>Src\Application\GameObject\UI\ResultUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Effect\Explosion\Explosion.cpp">
+      <Filter>Src\Application\GameObject\Effect\Explosion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,9 +2,7 @@
 #include"../../../Scene/SceneManager.h"
 void ResultUI::Update()
 {
-	m_TimeRectNum1 = GameScore % 10;
-	m_TimeRectNum2 = (GameScore / 10) % 6;
-	m_TimeRectNum1 = (GameScore / 60) % 10;
+
 
 	if (ScoreDisplayTime > 0)
 	{
@@ -19,6 +17,7 @@ void ResultUI::Update()
 
 void ResultUI::DrawSprite()
 {
+
 	if (m_scoreRankTex)
 	{
 		m_scoreColor = { 1,1,1,1 };
@@ -29,21 +28,22 @@ void ResultUI::DrawSprite()
 	m_timeColor = { 1,1,1,1 };
 	if (m_scoreTimeColonTex)
 	{
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeColonTex, m_timePos.x, m_timePos.y, nullptr, &m_timeColor);
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeColonTex, m_timePos.x, m_timePos.y + 8, nullptr, &m_timeColor);
 	}
+
 
 	if (m_scoreTimeTex)
 	{
-		m_timeRect = { (long)(0 + (m_scoreTimeTex->GetWidth() / 10 * m_TimeRectNum1)),0,(long)m_scoreTimeTex->GetWidth() / 10 ,(long)m_scoreTimeTex->GetHeight() / 10 };
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeColonTex, m_timePos.x - 80, m_timePos.y, m_timeRect.x, m_timeRect.y, &m_timeRect, &m_timeColor);
+		m_timeRect = { 0 + ((long)(m_scoreTimeTex->GetWidth() / 10) * m_TimeRectNum1),0,(long)(m_scoreTimeTex->GetWidth() / 10) ,(long)m_scoreTimeTex->GetHeight() };
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeTex, m_timePos.x - 40, m_timePos.y, m_timeRect.width, m_timeRect.height, &m_timeRect,&m_timeColor);
 
-		m_timeRect = { (long)(0 + (m_scoreTimeTex->GetWidth() / 10 * m_TimeRectNum2)),0,(long)m_scoreTimeTex->GetWidth() / 10 ,(long)m_scoreTimeTex->GetHeight() / 10 };
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeColonTex, m_timePos.x + 80, m_timePos.y, m_timeRect.x, m_timeRect.y, &m_timeRect, &m_timeColor);
+		m_timeRect = { 0 + ((long)(m_scoreTimeTex->GetWidth() / 10) * m_TimeRectNum2),0,(long)(m_scoreTimeTex->GetWidth() / 10) ,(long)m_scoreTimeTex->GetHeight()};
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeTex, m_timePos.x + 40, m_timePos.y, m_timeRect.width, m_timeRect.height, &m_timeRect, &m_timeColor);
 
-		m_timeRect = { (long)(0 + (m_scoreTimeTex->GetWidth() / 10 * m_TimeRectNum3)),0,(long)m_scoreTimeTex->GetWidth() / 10 ,(long)m_scoreTimeTex->GetHeight() / 10 };
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeColonTex, m_timePos.x + 160, m_timePos.y, m_timeRect.x, m_timeRect.y, &m_timeRect, &m_timeColor);
+		m_timeRect = { 0 + ((long)(m_scoreTimeTex->GetWidth() / 10) * m_TimeRectNum3),0,(long)(m_scoreTimeTex->GetWidth() / 10) ,(long)m_scoreTimeTex->GetHeight()};
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeTex, m_timePos.x + 80, m_timePos.y, m_timeRect.width, m_timeRect.height, &m_timeRect, &m_timeColor);
 	}
-
+	
 }
 
 void ResultUI::Init()
@@ -51,6 +51,10 @@ void ResultUI::Init()
 	m_RandomGen = std::make_shared<KdRandomGenerator>();
 
 	GameScore = SceneManager::Instance().GatData(0);
+
+	m_TimeRectNum3 = GameScore % 10;
+	m_TimeRectNum2 = (GameScore / 10) % 6;
+	m_TimeRectNum1 = (GameScore / 60) % 10;
 
 	if (!m_scoreRankTex)
 	{
