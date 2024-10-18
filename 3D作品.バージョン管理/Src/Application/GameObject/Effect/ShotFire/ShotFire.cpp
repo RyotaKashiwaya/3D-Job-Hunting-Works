@@ -43,7 +43,7 @@ void ShotFire::Init()
 		m_spAnimator->SetAnimation(m_spModel->GetData()->GetAnimation("scene"));
 	}
 
-	m_tramsMat = Math::Matrix::CreateTranslation(m_pos);
+	m_transMat = Math::Matrix::CreateTranslation(m_pos);
 	m_scaleMat = Math::Matrix::CreateScale(m_Scele);
 	int _rot = m_RandomGen->GetInt(0, 360);
 	m_rotMat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_rotY));

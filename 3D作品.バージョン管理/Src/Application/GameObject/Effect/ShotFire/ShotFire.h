@@ -29,7 +29,7 @@ private:
 
 	std::shared_ptr<KdModelWork> m_spModel = nullptr;
 
-	Math::Matrix				 m_tramsMat = Math::Matrix::Identity;
+	Math::Matrix				 m_transMat = Math::Matrix::Identity;
 
 	Math::Matrix				 m_scaleMat = Math::Matrix::Identity;
 
