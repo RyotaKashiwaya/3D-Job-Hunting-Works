@@ -11,7 +11,7 @@ void ShotFire::Update()
 	m_spAnimator->AdvanceTime(m_spModel->WorkNodes());
 	m_spModel->CalcNodeMatrices();
 
-	m_mWorld = m_scaleMat * m_rotMat * m_rotBulletMat * m_tramsMat;
+	m_mWorld = m_scaleMat * m_rotMat * m_rotBulletMat * m_transMat;
 }
 
 
@@ -49,7 +49,7 @@ void ShotFire::Init()
 	m_rotMat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(m_rotY));
 	m_rotMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(_rot));
 
-	m_mWorld = m_scaleMat * m_rotBulletMat * m_tramsMat;
+	m_mWorld = m_scaleMat * m_rotBulletMat * m_transMat;
 
 }
 

@@ -10,7 +10,7 @@ void RifleEnemy::Update()
 
 	//Application::Instance().m_log.AddLog("DirX %d\n", m_moveDirForPop.x);
 
-	m_pDebugWire->AddDebugLine(m_pos + Math::Vector3(0, 3, 0), m_moveDirForPop, 100, kRedColor);
+	//m_pDebugWire->AddDebugLine(m_pos + Math::Vector3(0, 3, 0), m_moveDirForPop, 100, kRedColor);
 
 	std::shared_ptr<Character> chara = m_wpChara.lock();
 
@@ -95,8 +95,8 @@ void RifleEnemy::Update()
 	_dir.y = 0;
 	_dir.Normalize();
 
-	m_pDebugWire->AddDebugSphere(m_WeaponMazzlePos, 3, kGreenColor);
-	m_pDebugWire->AddDebugLine(m_WeaponMazzlePos, _dir, 500, kBlueColor);
+	//m_pDebugWire->AddDebugSphere(m_WeaponMazzlePos, 3, kGreenColor);
+	//m_pDebugWire->AddDebugLine(m_WeaponMazzlePos, _dir, 500, kBlueColor);
 
 	if (m_IsAttack)
 	{
@@ -267,7 +267,7 @@ void RifleEnemy::WeaponRotate()
 	Math::Vector3 _vecB = _dir;
 	_vecB.Normalize();
 
-	m_pDebugWire->AddDebugLine(m_pos, _dir, 50, kRedColor);
+	//m_pDebugWire->AddDebugLine(m_pos, _dir, 50, kRedColor);
 
 	//①と②のベクトルの内積値から角度を算出
 	float _dot = _vecA.Dot(_vecB);				//内積値を算出
