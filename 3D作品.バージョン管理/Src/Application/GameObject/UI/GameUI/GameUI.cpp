@@ -8,12 +8,17 @@ void GameUI::Update()
 
 	TimeCount();
 
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	{
+		SceneManager::Instance().SetNextScene(SceneManager::SceneType::Title);
+	}
+
 	if (!IsNowHit)
 	{
-		if (m_rectNum == 5)
+		if (m_rectNum == 100)
 		{
 			SceneManager::Instance().TransferData(m_time);
-			SceneManager::Instance().SetNextScene(SceneManager::SceneType::Result);
+			SceneManager::Instance().SetNextScene(SceneManager::SceneType::Title);
 		}
 
 		if (m_ScoreRect == (m_RemainingGoal * 60) / 100)

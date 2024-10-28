@@ -1,5 +1,7 @@
 ﻿#pragma once 
 
+class RifleEnemy;
+
 class Explotion :public KdGameObject
 {
 public:
@@ -22,14 +24,11 @@ public:
 
 	void Rotate(Math::Vector3 _mozlePos, Math::Vector3 _shotDir);
 
-	//親情報入力(死亡した際にこのクラスを呼ぶ場合などに親クラスのOnHitを作動させるため)
-	void SetPearent(std::shared_ptr<KdGameObject> _ptr) { m_wpPearent = _ptr; }
+	bool IsEnd() { return AnimationEnd; }
 
 private:
 	int							animetionNum = 0;
 	int							animetionEnd = 50;
-
-	std::weak_ptr<KdGameObject> m_wpPearent;
 
 	std::shared_ptr<KdRandomGenerator> m_RandomGen;
 
@@ -46,5 +45,5 @@ private:
 
 	Math::Vector3				 m_Scele = {};
 
-
+	bool AnimationEnd = false;
 };

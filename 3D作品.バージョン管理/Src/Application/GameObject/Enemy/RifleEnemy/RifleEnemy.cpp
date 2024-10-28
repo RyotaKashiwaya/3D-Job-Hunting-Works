@@ -4,17 +4,20 @@
 #include"../../../GameObject/Character/Character.h"
 #include"../../../GameObject/Camera/FPSCamera/FPSCamera.h"
 #include"../../../GameObject/Effect/ShotFire/ShotFire.h"
+#include"../../../GameObject/Effect/Explosion/Explosion.h"
 #include"../../../main.h"
 void RifleEnemy::Update()
 {
-
-	//Application::Instance().m_log.AddLog("DirX %d\n", m_moveDirForPop.x);
-
-	//m_pDebugWire->AddDebugLine(m_pos + Math::Vector3(0, 3, 0), m_moveDirForPop, 100, kRedColor);
-
 	std::shared_ptr<Character> chara = m_wpChara.lock();
 
-	if (!IsPopDirection)
+	if (IsDead)
+	{
+		if (m_wpExp.lock()->IsEnd()==true)
+		{
+			m_isExpired = true;
+		}
+	}
+	else if (!IsPopDirection)
 	{
 		if (m_pos.z > m_PopEndPosZ)
 		{
@@ -40,13 +43,13 @@ void RifleEnemy::Update()
 					{
 						m_speed = 1.7f;
 						m_moveDirPowForPop += 0.008f;
-					
+
 					}
 					if (m_pos.x <= 0 && chara->GetPos().x > m_pos.x)
 					{
 						m_speed = 1.7f;
 						m_moveDirPowForPop -= 0.008f;
-					
+
 					}
 
 					m_RotDir = m_moveDirForPop;
@@ -77,9 +80,9 @@ void RifleEnemy::Update()
 						m_moveDirForPop.x = 0;
 						m_mWorld = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(0));
 					}
-					
-					
-					
+
+
+
 				}
 			}
 
@@ -240,7 +243,18 @@ void RifleEnemy::CarRotate()
 
 void RifleEnemy::OnHit()
 {
-	m_isExpired = true;
+	IsDead = true;
+
+	std::shared_ptr<Explotion> _exp = std::make_shared<Explotion>();
+	Math::Vector3 _dir = m_wpChara.lock()->GetPos() - m_pos;
+
+	m_wpExp = _exp;
+
+	_exp->SetRotY(180);
+	_exp->Rotate(m_pos, _dir);
+	_exp->SetScale(100);
+	_exp->Init();
+	SceneManager::Instance().AddObject(_exp);
 }
 
 void RifleEnemy::WeaponRotate()

@@ -3,6 +3,7 @@
 #include"../../../GameObject/Enemy/EnemyBase.h"
 
 class Character;
+class Explotion;
 
 class RifleEnemy :public EnemyBase
 {
@@ -42,6 +43,7 @@ private:
 	Math::Vector3			m_WeaponMazzlePos = Math::Vector3::Zero;
 
 	std::weak_ptr<Character> m_wpChara;
+	std::weak_ptr<Explotion> m_wpExp;
 
 	float					 m_popPosX = {};
 	bool					 m_IsAvoidance = false;
@@ -65,4 +67,6 @@ private:
 	bool						 keyFlg = false;
 
 	int							 Flame = {};
+
+	bool						 IsDead = false;
 };

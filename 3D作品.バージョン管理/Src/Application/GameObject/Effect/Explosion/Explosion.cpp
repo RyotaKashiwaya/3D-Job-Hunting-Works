@@ -4,14 +4,8 @@ void Explotion::Update()
 {
 	if (animetionNum == animetionEnd)
 	{
-		std::shared_ptr<KdGameObject> _ptr = m_wpPearent.lock();
-		if (_ptr)
-		{
-			_ptr->OnHit();
-		}
-
+		AnimationEnd = true;
 		m_isExpired = true;
-
 	}
 	else
 	{
@@ -44,7 +38,7 @@ void Explotion::Init()
 		m_spPoly = std::make_shared<KdSquarePolygon>();
 		m_spPoly->SetMaterial("Asset/Textures/Object/Effect/Explosion/explosion.png");
 
-		m_spPoly->SetSplit(5, 10);
+		m_spPoly->SetSplit(10, 5);
 	}
 
 	m_transMat = Math::Matrix::CreateTranslation(m_pos);
@@ -54,7 +48,7 @@ void Explotion::Init()
 
 void Explotion::Rotate(Math::Vector3 _mozlePos, Math::Vector3 _shotDir)
 {
-	m_pos = _mozlePos;
+	m_pos = _mozlePos + Math::Vector3(0,30,0);
 	m_moveDir = _shotDir;
 	m_moveDir.Normalize();
 
