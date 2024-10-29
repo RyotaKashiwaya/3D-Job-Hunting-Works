@@ -3,6 +3,9 @@
 #include"../../../GameObject/Weapon/WeaponBase.h"
 void GunUI::Update()
 {
+	OldBullet = NowBullet;
+	nowShooting = false;
+
 	m_spGun = m_wpGun.lock();
 
 	NowBullet = m_spGun->GetNowBullet();
@@ -18,6 +21,11 @@ void GunUI::Update()
 	else
 	{
 		ColorIntensity = 1;
+	}
+
+	if (OldBullet < NowBullet)
+	{
+		nowShooting = true;
 	}
 
 	m_clipTexNum1 = NowBullet / 100;

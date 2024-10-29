@@ -27,23 +27,27 @@ public:
 	bool IsEnd() { return AnimationEnd; }
 
 private:
-	int							animetionNum = 0;
-	int							animetionEnd = 50;
+	int									animetionNum = 5;
+	int									animetionEnd = 50;
 
-	std::shared_ptr<KdRandomGenerator> m_RandomGen;
+	std::shared_ptr<KdRandomGenerator>	m_RandomGen;
 
-	std::shared_ptr<KdSquarePolygon> m_spPoly = nullptr;
+	std::shared_ptr<KdSquarePolygon>	m_spPoly = nullptr;
 
-	float						 m_rotY = {};
-	Math::Matrix				 m_rotMat = Math::Matrix::Identity;
-	Math::Matrix				 m_transMat = Math::Matrix::Identity;
-	Math::Matrix				 m_scaleMat = Math::Matrix::Identity;
+	float								m_rotY = {};
+	Math::Matrix						m_rotMat = Math::Matrix::Identity;
+	Math::Matrix						m_transMat = Math::Matrix::Identity;
+	Math::Matrix						m_scaleMat = Math::Matrix::Identity;
 
-	Math::Vector3				 m_pos = Math::Vector3::Zero;
+	Math::Vector3						m_pos = Math::Vector3::Zero;
 
-	Math::Vector3 m_moveDir = Math::Vector3::Zero;
+	Math::Vector3						m_moveDir = Math::Vector3::Zero;
 
-	Math::Vector3				 m_Scele = {};
+	Math::Vector3						m_Scele = {};
 
-	bool AnimationEnd = false;
+	bool								AnimationEnd = false;
+
+	bool								EndFlg = false;
+	int									EndCnt = 0;
+	int									EndCntNum = 90;
 };

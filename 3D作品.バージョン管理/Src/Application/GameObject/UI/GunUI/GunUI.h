@@ -42,8 +42,11 @@ private:
 	float			ColorIntensity = {};
 	float			ColorIntensityNum = {};
 
+	int						   OldBullet = 0;
 	int						   NowBullet = 0;
 	int						   MaxBullet = 0;
+
+	bool					   nowShooting = false;
 
 	std::shared_ptr<KdTexture> m_spMagazinTexTop;
 	std::shared_ptr<KdTexture> m_spMagazinTexUnder;

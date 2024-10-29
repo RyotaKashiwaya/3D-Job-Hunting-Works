@@ -5,11 +5,19 @@ void Explotion::Update()
 	if (animetionNum == animetionEnd)
 	{
 		AnimationEnd = true;
-		m_isExpired = true;
+		EndFlg = true;
 	}
 	else
 	{
 		animetionNum++;
+	}
+
+	if (EndFlg)
+	{
+		if (EndCnt >= EndCntNum)
+		{
+			m_isExpired = true;
+		}
 	}
 
 	m_spPoly->SetUVRect(animetionNum);

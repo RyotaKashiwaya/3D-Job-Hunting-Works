@@ -144,17 +144,20 @@ void RifleEnemy::PostUpdate()
 
 void RifleEnemy::DrawLit()
 {
-	if (m_spCarModel)
+	if (!IsDead)
 	{
-		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spCarModel, m_mWorld);
-	}
-	if (m_spHumanModel)
-	{
-		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spHumanModel, m_mWorld);
-	}
-	if (m_spWeaponModel)
-	{
-		KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spWeaponModel, m_weaponMat);
+		if (m_spCarModel)
+		{
+			KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spCarModel, m_mWorld);
+		}
+		if (m_spHumanModel)
+		{
+			KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spHumanModel, m_mWorld);
+		}
+		if (m_spWeaponModel)
+		{
+			KdShaderManager::Instance().m_StandardShader.DrawModel(*m_spWeaponModel, m_weaponMat);
+		}
 	}
 }
 
@@ -252,7 +255,7 @@ void RifleEnemy::OnHit()
 
 	_exp->SetRotY(180);
 	_exp->Rotate(m_pos, _dir);
-	_exp->SetScale(100);
+	_exp->SetScale(200);
 	_exp->Init();
 	SceneManager::Instance().AddObject(_exp);
 }
