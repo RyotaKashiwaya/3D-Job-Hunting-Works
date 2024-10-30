@@ -22,6 +22,8 @@ public:
 	void EnemyDet() { _nowTotalEnemy--; }
 
 	void EnemyPop();
+
+	std::vector<std::shared_ptr<EnemyBase>> GetEnemyList() { return m_enemyList; }
 private:
 	std::shared_ptr<KdRandomGenerator> m_RondomGen;
 
@@ -31,5 +33,17 @@ private:
 	std::vector<std::shared_ptr<EnemyBase>> m_enemyList;
 
 	int							_nowTotalEnemy = 0; 
-	static const int			MaxEnemyNum = 1;
+	static const int			MaxEnemyNum = 10;
+
+	int							EnemyPopCnt = 0;
+	int							EnemyPopCntNum = 0;
+
+public:
+
+	static EnemyManeger& Instance()
+	{
+		static EnemyManeger instance;
+		return instance;
+	}
+
 };

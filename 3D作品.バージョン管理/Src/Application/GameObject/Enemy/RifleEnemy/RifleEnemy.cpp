@@ -76,9 +76,26 @@ void RifleEnemy::Update()
 					}
 					else
 					{
-						m_speed = 4.5f;
-						m_moveDirForPop.x = 0;
-						m_mWorld = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(0));
+						bool _flg = false;
+						for (auto& enemy : EnemyManeger::Instance().GetEnemyList())
+						{
+							if ((GetPos() - enemy->GetPos()).Length() < 80)
+							{
+								_flg = true;
+								break;
+							}
+						}
+
+						if (_flg)
+						{
+							m_moveDirForPop.x += 0.05;
+						}
+						else
+						{
+							m_speed = 4.5f;
+							m_moveDirForPop.x = 0;
+							m_mWorld = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(0));
+						}
 					}
 
 
@@ -258,6 +275,8 @@ void RifleEnemy::OnHit()
 	_exp->SetScale(200);
 	_exp->Init();
 	SceneManager::Instance().AddObject(_exp);
+
+	KdAudioManager::Instance().Play("Asset/Sounds/GameObject/Effect/Explosion/Explosion.wav")->SetVolume(0.1f);
 }
 
 void RifleEnemy::WeaponRotate()

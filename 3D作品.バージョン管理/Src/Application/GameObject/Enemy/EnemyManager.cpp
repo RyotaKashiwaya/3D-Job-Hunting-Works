@@ -61,14 +61,23 @@ void EnemyManeger::EnemyPop()
 
 	if (_nowTotalEnemy < MaxEnemyNum)
 	{
-		_nowTotalEnemy++;
-		std::shared_ptr<RifleEnemy> _rifleEnemy = std::make_shared<RifleEnemy>();
-		_rifleEnemy->SetChara(m_spChara);
-		_rifleEnemy->SetPos({ (m_RondomGen->GetInt(0,1) * -2 + 1) * m_RondomGen->GetFloat(200.0f,1200.0f),0,m_RondomGen->GetFloat(-1000.0f,-800.0f)});
-		_rifleEnemy->Init();
+		if (EnemyPopCnt > EnemyPopCntNum)
+		{
+			EnemyPopCntNum = m_RondomGen->GetInt(60, 300);
+			EnemyPopCnt = 0;
+			_nowTotalEnemy++;
+			std::shared_ptr<RifleEnemy> _rifleEnemy = std::make_shared<RifleEnemy>();
+			_rifleEnemy->SetChara(m_spChara);
+			_rifleEnemy->SetPos({ (m_RondomGen->GetInt(0,1) * -2 + 1) * m_RondomGen->GetFloat(200.0f,1200.0f),0,m_RondomGen->GetFloat(-1000.0f,-800.0f) });
+			_rifleEnemy->Init();
 
-		SceneManager::Instance().AddObject(_rifleEnemy);
+			SceneManager::Instance().AddObject(_rifleEnemy);
 
-		m_enemyList.push_back(_rifleEnemy);
+			m_enemyList.push_back(_rifleEnemy);
+		}
+		else
+		{
+			EnemyPopCnt++;
+		}
 	}
 }
