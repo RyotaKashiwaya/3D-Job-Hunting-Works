@@ -27,6 +27,7 @@ public:
 	void SetPos(Math::Vector3 _pos) { m_pos = _pos; }
 
 	void WeaponRotate();
+
 private:
 
 
@@ -44,6 +45,8 @@ private:
 
 	std::weak_ptr<Character> m_wpChara;
 	std::weak_ptr<Explotion> m_wpExp;
+
+	int						 m_life = 10;
 
 	float					 m_popPosX = {};
 	bool					 m_IsAvoidance = false;
@@ -68,5 +71,5 @@ private:
 
 	int							 Flame = {};
 
-	bool						 IsDead = false;
+
 };

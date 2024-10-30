@@ -263,20 +263,29 @@ void RifleEnemy::CarRotate()
 
 void RifleEnemy::OnHit()
 {
-	IsDead = true;
 
-	std::shared_ptr<Explotion> _exp = std::make_shared<Explotion>();
-	Math::Vector3 _dir = m_wpChara.lock()->GetPos() - m_pos;
+	if ( m_life == 0 && !IsDead)
+	{
+		IsDead = true;
 
-	m_wpExp = _exp;
+		std::shared_ptr<Explotion> _exp = std::make_shared<Explotion>();
+		Math::Vector3 _dir = m_wpChara.lock()->GetPos() - m_pos;
 
-	_exp->SetRotY(180);
-	_exp->Rotate(m_pos, _dir);
-	_exp->SetScale(200);
-	_exp->Init();
-	SceneManager::Instance().AddObject(_exp);
+		m_wpExp = _exp;
 
-	KdAudioManager::Instance().Play("Asset/Sounds/GameObject/Effect/Explosion/Explosion.wav")->SetVolume(0.1f);
+		_exp->SetRotY(180);
+		_exp->Rotate(m_pos, _dir);
+		_exp->SetScale(200);
+		_exp->Init();
+		SceneManager::Instance().AddObject(_exp);
+
+		KdAudioManager::Instance().Play("Asset/Sounds/GameObject/Effect/Explosion/Explosion.wav")->SetVolume(0.1f);
+
+	}
+	else
+	{
+		m_life--;
+	}
 }
 
 void RifleEnemy::WeaponRotate()

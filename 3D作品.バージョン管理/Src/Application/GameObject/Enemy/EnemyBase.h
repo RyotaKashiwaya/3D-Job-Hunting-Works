@@ -16,6 +16,7 @@ public:
 	virtual void EnemyPop();
 
 	virtual void OnHit();
+
 protected:
 	std::shared_ptr<KdRandomGenerator> m_RandomGen;
 
@@ -26,4 +27,6 @@ protected:
 	Math::Matrix				 m_weaponMat = Math::Matrix::Identity;
 
 	bool						IsPopDirection = false;
+
+	bool						 IsDead = false;
 };

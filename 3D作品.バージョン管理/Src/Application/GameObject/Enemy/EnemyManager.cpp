@@ -7,7 +7,17 @@
 #include"../../main.h"
 void EnemyManeger::Update()
 {
-	
+	std::vector<std::shared_ptr<EnemyBase>>::iterator it = m_enemyList.begin();
+	for (auto& enemy : m_enemyList)
+	{
+		if (enemy->IsExpired() == true)
+		{
+			m_enemyList.erase(it);
+			break;
+		}
+		it++;
+	}
+
 	EnemyPop();
 	BulletHit();
 	Application::Instance().m_log.AddLog("Enemy %d \n",m_enemyList.size());
@@ -38,9 +48,6 @@ void EnemyManeger::BulletHit()
 			{
 				enemy->OnHit();
 				bullet->OnHit();
-				_nowTotalEnemy--;
-				m_enemyList.erase(it);
-				EnemyPop();
 				IsErase = true;
 				break;
 			}
@@ -51,8 +58,6 @@ void EnemyManeger::BulletHit()
 		}
 		it++;
 	}
-
-
 
 }
 
