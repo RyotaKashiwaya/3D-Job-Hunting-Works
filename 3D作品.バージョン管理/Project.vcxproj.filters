@@ -142,6 +142,9 @@
     <Filter Include="Src\Application\GameObject\Effect\Explosion">
       <UniqueIdentifier>{c035a246-d33c-46a8-8f7e-304c01e178c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Enemy\RifleEnemy\HP">
+      <UniqueIdentifier>{f5f425fa-3fc2-4b47-acd4-f77a6704a61f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -381,6 +384,9 @@
     <ClInclude Include="Src\Application\GameObject\Effect\Explosion\Explosion.h">
       <Filter>Src\Application\GameObject\Effect\Explosion</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Enemy\RifleEnemy\HP\RifleEnemyHP.h">
+      <Filter>Src\Application\GameObject\Enemy\RifleEnemy\HP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -592,6 +598,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Effect\Explosion\Explosion.cpp">
       <Filter>Src\Application\GameObject\Effect\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Enemy\RifleEnemy\HP\RifleEnemyHP.cpp">
+      <Filter>Src\Application\GameObject\Enemy\RifleEnemy\HP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
