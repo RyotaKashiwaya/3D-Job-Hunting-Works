@@ -8,6 +8,14 @@ void RifleEnemyHP::Update()
 
 void RifleEnemyHP::DrawLit()
 {
+	if (m_spHpGagePoly)
+	{
+		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_spHpGagePoly, m_GageMat);
+	}
+	if (m_spHpFlamePoly)
+	{
+		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_spHpFlamePoly, m_FlameMat);
+	}
 }
 
 void RifleEnemyHP::Init()
@@ -21,4 +29,7 @@ void RifleEnemyHP::Init()
 	{
 		m_spHpGagePoly = std::make_shared<KdSquarePolygon>();
 	}
+
+
+	
 }
