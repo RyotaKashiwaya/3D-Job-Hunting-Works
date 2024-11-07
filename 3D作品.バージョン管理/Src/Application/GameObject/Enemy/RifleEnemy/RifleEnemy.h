@@ -28,6 +28,8 @@ public:
 
 	void WeaponRotate();
 
+	Math::Vector3 GetPos() { return m_pos; };
+	Math::Vector3 GetDir() { return m_moveDirForPop; };
 private:
 
 

@@ -106,21 +106,23 @@ void GameScene::Init()
 	//===================================================================
 	// カメラ初期化
 	//===================================================================
-	std::shared_ptr<FPSCamera>		camera = std::make_shared<FPSCamera>();
+	std::shared_ptr<FPSCamera>		_fpscam = std::make_shared<FPSCamera>();
+
 	//  std::shared_ptr<TPSCamera>		_camera = std::make_shared<TPSCamera>();
 	//	std::shared_ptr<CCTVCamera>		_camera = std::make_shared<CCTVCamera>();
-	camera->Init();
-	AddObject(camera);
+	_fpscam->Init();
+	AddObject(_fpscam);
 
 	map->SetChara(character);
 	character->SetWeapon(gun);
 	character->SetParent(car);
 	character->SetGameUI(gameUI);
-	camera->SetTarget(character);
-	camera->SetWeapon(gun);
+	_fpscam->SetTarget(character);
+	_fpscam->SetWeapon(gun);
 	gun->SetParent(character);
 	enemyManeger->SetRifle(gun);
 	enemyManeger->SetChara(character);
+	enemyManeger->SetCamera(_fpscam->GetCamera());
 }
 
 void GameScene::Event()

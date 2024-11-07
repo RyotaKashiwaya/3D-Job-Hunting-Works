@@ -1,12 +1,15 @@
 ﻿#pragma once
 
 class RifleEnemy;
+class Character;
 
 class RifleEnemyHP :public KdGameObject
 {
 public:
 
 	void Update()override;
+
+	void DrawSprite()override;
 
 	void DrawLit()override;
 
@@ -17,25 +20,21 @@ public:
 		m_wpPearent = _ptr;
 	}
 
+	void SetCamera(std::shared_ptr<KdCamera> _ptr)
+	{
+		m_wpCamera = _ptr;
+	}
+
 private:		
 
 	std::weak_ptr<RifleEnemy> m_wpPearent;
+	std::weak_ptr<KdCamera> m_wpCamera;
 
-	std::shared_ptr<KdSquarePolygon> m_spHpGagePoly = nullptr;
-	std::shared_ptr<KdSquarePolygon> m_spHpFlamePoly = nullptr;
+	std::shared_ptr<KdSquarePolygon> m_flamePoly = nullptr;
+	std::shared_ptr<KdSquarePolygon> m_gagePoly = nullptr;
 
-	Math::Matrix					 m_GageTrans = Math::Matrix::Identity;
-	Math::Matrix					 m_GageRot = Math::Matrix::Identity;
-	Math::Matrix					 m_GageMat = Math::Matrix::Identity;
+	Math::Matrix					 m_ScaleMat;
+	Math::Matrix					 m_LocalMat;
 
-	Math::Matrix					 m_FlameTrans = Math::Matrix::Identity;
-	Math::Matrix					 m_FlameRot = Math::Matrix::Identity;
-	Math::Matrix					 m_FlameMat = Math::Matrix::Identity;
-	
-	Math::Matrix					 m_localMat = Math::Matrix::Identity;
-
-	Math::Vector3					 m_HPpos;
-
-	Math::Rectangle					 m_rect;
-
+	Math::Vector3					 m_scale;
 };

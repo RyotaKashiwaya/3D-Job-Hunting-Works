@@ -1,6 +1,7 @@
 ﻿#include "EnemyManager.h"
 #include"../../Scene/SceneManager.h"
 #include"../../GameObject/Enemy/RifleEnemy/RifleEnemy.h"
+#include"../../GameObject/Enemy/RifleEnemy/HP/RifleEnemyHP.h"
 #include"../../GameObject/Weapon/Rifle/Rifle.h"
 #include"../../GameObject/Bullet/Rifle/RifleBullet.h"
 #include"../../GameObject/Character/Character.h"
@@ -13,6 +14,7 @@ void EnemyManeger::Update()
 		if (enemy->IsExpired() == true)
 		{
 			m_enemyList.erase(it);
+			_nowTotalEnemy--;
 			break;
 		}
 		it++;
@@ -76,7 +78,14 @@ void EnemyManeger::EnemyPop()
 			_rifleEnemy->SetPos({ (m_RondomGen->GetInt(0,1) * -2 + 1) * m_RondomGen->GetFloat(200.0f,1200.0f),0,m_RondomGen->GetFloat(-1000.0f,-800.0f) });
 			_rifleEnemy->Init();
 
+			std::shared_ptr<RifleEnemyHP> _rifleHP = std::make_shared<RifleEnemyHP>();
+			_rifleHP->SetCamera(m_wpCam.lock());
+			_rifleHP->SetPearent(_rifleEnemy);
+			_rifleHP->SetPos(_rifleEnemy->GetPos());
+			_rifleHP->Init();
+
 			SceneManager::Instance().AddObject(_rifleEnemy);
+			SceneManager::Instance().AddObject(_rifleHP);
 
 			m_enemyList.push_back(_rifleEnemy);
 		}
