@@ -6,13 +6,18 @@
 void RifleEnemyHP::Update()
 {
 	std::shared_ptr<RifleEnemy> m_spEnemy = m_wpPearent.lock();
-	Math::Matrix			  EnemyMat = Math::Matrix::Identity;
-	if (m_spEnemy)
-	{
-		EnemyMat = m_spEnemy->GetMatrix();
-	}
 
-	m_mWorld = m_ScaleMat * m_LocalMat * EnemyMat;
+	if (!m_spEnemy)
+	{
+		m_isExpired = true;
+		return;
+	}
+	Rotate();
+
+	Math::Vector3 m_pos = m_spEnemy->GetPos() + m_LocalPos;
+	Math::Matrix m_TransMat = Math::Matrix::CreateTranslation(m_pos);
+
+	m_mWorld = m_ScaleMat * m_RotMat * m_TransMat;
 }
 
 void RifleEnemyHP::DrawSprite()
@@ -62,7 +67,7 @@ void RifleEnemyHP::Init()
 	if (!m_gagePoly)
 	{
 		m_gagePoly = std::make_shared<KdSquarePolygon>();
-		m_gagePoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage.png");
+		m_gagePoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage1.png");
 	}
 
 	if (!m_flamePoly)
@@ -71,8 +76,48 @@ void RifleEnemyHP::Init()
 		m_flamePoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPFlame.png");
 	}
 
-	m_scale = { 30,5,0 };
+	m_scale = { 60,5,0 };
 
 	m_ScaleMat = Math::Matrix::CreateScale(m_scale);
-	m_LocalMat = Math::Matrix::CreateTranslation(0, 50, 0);
+	m_LocalPos = { 0,50,10 };
+}
+
+void RifleEnemyHP::Rotate()
+{
+	std::shared_ptr<Character> m_spChara = m_wpChara.lock();
+	if (!m_spChara)return;
+	
+
+	Math::Vector3	_dir = m_spChara->GetPos() - GetPos();
+
+	_dir.y = 0;
+
+	_dir.Normalize();
+
+	//レティクルへのベクトルと弾への信仰ベクトルから弾の向き(回転行列)を作成
+
+	//①　ベクトルA ・・・現在の進行ベクトル
+
+	Math::Vector3 _vecA = { 0,0,-1 };
+	_vecA.Normalize();
+
+
+	//②　ベクトルB ・・・照準への進行ベクトル
+	Math::Vector3 _vecB = _dir;
+	_vecB.Normalize();
+
+	//①と②のベクトルの内積値から角度を算出
+	float _dot = _vecA.Dot(_vecB);				//内積値を算出
+	float _angle = acos(_dot);					//内積で取得したcos値から2つのベクトルの角度を算出
+
+	//①と②の外積を利用して、回転するためのベクトル(回転軸)を作成
+	Math::Vector3 _rotAxis = _vecA.Cross(_vecB);
+
+	//内積で算出した角度分、外積で算出したベクトル(回転軸)で回転する行列を作成
+	//＝弾がレティクルの方向を向く
+
+	if (_vecA != _vecB)
+	{
+		m_RotMat = Math::Matrix::CreateFromAxisAngle(_rotAxis, _angle);
+	}
 }
