@@ -28,4 +28,13 @@ private:
 	Math::Vector3			  m_shotLocalPos = Math::Vector3::Zero;
 
 	float ShotRecoil = {};
+
+public:
+
+	static FPSCamera& Instance()
+	{
+		static FPSCamera instance;
+		return instance;
+	}
+
 };

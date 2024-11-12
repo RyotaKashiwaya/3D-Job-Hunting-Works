@@ -30,6 +30,9 @@ public:
 
 	Math::Vector3 GetPos() { return m_pos; };
 	Math::Vector3 GetDir() { return m_moveDirForPop; };
+
+	int GetLife() { return m_life; }
+	int GetMaxLife() { return m_Maxlife; }
 private:
 
 
@@ -48,7 +51,8 @@ private:
 	std::weak_ptr<Character> m_wpChara;
 	std::weak_ptr<Explotion> m_wpExp;
 
-	int						 m_life = 10;
+	int						 m_Maxlife = 10;
+	int						 m_life = m_Maxlife;
 
 	float					 m_popPosX = {};
 	bool					 m_IsAvoidance = false;

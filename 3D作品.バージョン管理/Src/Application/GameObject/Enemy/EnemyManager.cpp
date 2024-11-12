@@ -79,7 +79,7 @@ void EnemyManeger::EnemyPop()
 			_rifleEnemy->Init();
 
 			std::shared_ptr<RifleEnemyHP> _rifleHP = std::make_shared<RifleEnemyHP>();
-			_rifleHP->SetCamera(m_spChara);
+			_rifleHP->SetChara(m_spChara);
 			_rifleHP->SetPearent(_rifleEnemy);
 			_rifleHP->SetPos(_rifleEnemy->GetPos());
 			_rifleHP->Init();

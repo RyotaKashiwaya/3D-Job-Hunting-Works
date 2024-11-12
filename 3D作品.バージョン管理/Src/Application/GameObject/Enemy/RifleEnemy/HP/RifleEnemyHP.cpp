@@ -12,12 +12,33 @@ void RifleEnemyHP::Update()
 		m_isExpired = true;
 		return;
 	}
+
+	if (m_spEnemy->GetLife() != oldLife)
+	{
+		IsHit = true;
+	}
+
+	oldLife = m_spEnemy->GetLife();
+
+	if (IsHit)
+	{
+		if(HpDrawCnt < HpDrawCntNum)
+		{
+			HpDrawCnt++;
+		}
+		else
+		{
+			IsHit = false;
+			HpDrawCnt = 0;
+		}
+	}
+
 	Rotate();
 
 	Math::Vector3 m_pos = m_spEnemy->GetPos() + m_LocalPos;
 	Math::Matrix m_TransMat = Math::Matrix::CreateTranslation(m_pos);
 
-	m_mWorld = m_ScaleMat * m_RotMat * m_TransMat;
+	m_mWorld = m_ScaleMat *  m_RotMat * m_TransMat;
 }
 
 void RifleEnemyHP::DrawSprite()
@@ -39,16 +60,25 @@ void RifleEnemyHP::DrawSprite()
 
 void RifleEnemyHP::DrawLit()
 {
-	if (m_gagePoly)
+	if (IsHit)
 	{
-		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_gagePoly, m_mWorld);
-	}
-	if (m_flamePoly)
-	{
-		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_flamePoly, m_mWorld);
+		if (m_gageUnderPoly)
+		{
+			KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_gageUnderPoly, m_mWorld);
+		}
+
+		if (m_gagePoly)
+		{
+			m_rect = {0,0,0 + (long)((m_polyTex->GetWidth() / maxlife) * oldLife),(long)m_polyTex->GetHeight()};
+			m_gagePoly->SetUVRect(m_rect);
+			KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_gagePoly, m_mWorld);
+		}
+		if (m_flamePoly)
+		{
+			KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_flamePoly, m_mWorld);
+		}
 	}
 }
-
 
 
 void RifleEnemyHP::Init()
@@ -63,6 +93,13 @@ void RifleEnemyHP::Init()
 	//	m_gageTex = std::make_shared<KdTexture>();
 	//	m_gageTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage.png");
 	//}
+	oldLife = m_wpPearent.lock()->GetLife();
+
+	if (!m_gageUnderPoly)
+	{
+		m_gageUnderPoly = std::make_shared<KdSquarePolygon>();
+		m_gageUnderPoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGageUnder.png");
+	}
 
 	if (!m_gagePoly)
 	{
@@ -70,11 +107,19 @@ void RifleEnemyHP::Init()
 		m_gagePoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage1.png");
 	}
 
+	if (!m_polyTex)
+	{
+		m_polyTex = std::make_shared<KdTexture>();
+		m_polyTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage1.png");
+	}
+
 	if (!m_flamePoly)
 	{
 		m_flamePoly = std::make_shared<KdSquarePolygon>();
 		m_flamePoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPFlame.png");
 	}
+
+	maxlife = m_wpPearent.lock()->GetMaxLife();
 
 	m_scale = { 60,5,0 };
 
@@ -121,3 +166,4 @@ void RifleEnemyHP::Rotate()
 		m_RotMat = Math::Matrix::CreateFromAxisAngle(_rotAxis, _angle);
 	}
 }
+
