@@ -5,6 +5,9 @@
 #include"../../../../main.h";
 void RifleEnemyHP::Update()
 {
+	Application::Instance().m_log.AddLog("oldlif =  %d \n", oldLife);
+
+
 	std::shared_ptr<RifleEnemy> m_spEnemy = m_wpPearent.lock();
 
 	if (!m_spEnemy)
@@ -38,92 +41,133 @@ void RifleEnemyHP::Update()
 	Math::Vector3 m_pos = m_spEnemy->GetPos() + m_LocalPos;
 	Math::Matrix m_TransMat = Math::Matrix::CreateTranslation(m_pos);
 
-	m_mWorld = m_ScaleMat *  m_RotMat * m_TransMat;
-}
-
-void RifleEnemyHP::DrawSprite()
-{
-	//Math::Vector3 _result = Math::Vector3::Zero;
-	//std::shared_ptr<RifleEnemy> m_spEnemy = m_wpPearent.lock();
-	//std::shared_ptr<KdCamera> m_spCamera = m_wpCamera.lock();
-	//if (m_spCamera)
-	//{
-	//	m_spCamera->ConvertWorldToScreenDetail(m_spEnemy->GetPos(), _result);
-	//	_result.y += 100;
-	//}
-
-	//KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex, _result.x, _result.y);
-
-	//KdShaderManager::Instance().m_spriteShader.DrawTex(m_flameTex, _result.x, _result.y);
-
+	m_mWorld = m_ScaleMat *   m_RotMat * m_TransMat;
 }
 
 void RifleEnemyHP::DrawLit()
 {
-	if (IsHit)
-	{
-		if (m_gageUnderPoly)
-		{
-			KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_gageUnderPoly, m_mWorld);
-		}
 
-		if (m_gagePoly)
-		{
-			m_rect = {0,0,0 + (long)((m_polyTex->GetWidth() / maxlife) * oldLife),(long)m_polyTex->GetHeight()};
-			m_gagePoly->SetUVRect(m_rect);
-			KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_gagePoly, m_mWorld);
-		}
-		if (m_flamePoly)
-		{
-			KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_flamePoly, m_mWorld);
-		}
+	//if (IsHit)
+	//{
+	//	if (m_gageUnderPoly)
+	//	{
+	//		m_rect = { 0,0, (long)m_polyTex->GetWidth(),(long)m_polyTex->GetHeight()};
+	//		m_gageUnderPoly->SetUVRect(m_rect);
+	//		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_gageUnderPoly, m_mWorld);
+	//	}
+
+	//	if (m_gagePoly)
+	//	{
+	//		m_rect = { 0,0,(long)m_polyTex->GetWidth() - (((long)m_polyTex->GetWidth() / maxlife) * oldLife), (long)m_polyTex->GetHeight() };
+	//		m_gagePoly->SetUVRect(m_rect);
+	//		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_gagePoly, m_mWorld);
+	//	}
+	//	if (m_flamePoly)
+	//	{
+	//		m_rect = { 0,0, (long)m_polyTex->GetWidth(),(long)m_polyTex->GetHeight()};
+	//		m_flamePoly->SetUVRect(m_rect);
+	//		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_flamePoly, m_mWorld);
+	//	}
+	//}
+
+}
+
+void RifleEnemyHP::DrawSprite()
+{
+
+
+	Math::Vector3 _result = Math::Vector3::Zero;
+	std::shared_ptr<KdCamera> _cam = m_wpCam.lock();
+
+	if (_cam)
+	{
+		_cam->ConvertWorldToScreenDetail(GetPos(), _result);
+		_result.y += 100;
 	}
+
+	if (m_gageUnderTex)
+	{
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(0.5));
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageUnderTex, 0, 100);
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(1));
+	}
+
+	if (m_gageTex)
+	{
+		m_rect = { 0 + ((long)m_gageTex->GetWidth() / maxlife) * (maxlife - oldLife) ,0,(long)m_gageTex->GetWidth()  ,(long)m_gageTex->GetHeight() };
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(0.5));
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex, 0,100,m_gageTex->GetWidth(),m_gageTex->GetHeight(), & m_rect);
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(1));
+	}
+
+	if (!m_flameTex)
+	{
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(0.5));
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_flameTex, 0, 100);
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(1));
+	}
+
+
+	Application::Instance().m_log.AddLog("x = %d ,y = %d,w = %d,h = %d \n", m_rect.x, m_rect.y, m_rect.width, m_rect.height);
 }
 
 
 void RifleEnemyHP::Init()
 {
-	//if (!m_flameTex)
-	//{
-	//	m_flameTex = std::make_shared<KdTexture>();
-	//	m_flameTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPFlame.png");
-	//}
-	//if (!m_gageTex)
-	//{
-	//	m_gageTex = std::make_shared<KdTexture>();
-	//	m_gageTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage.png");
-	//}
+
 	oldLife = m_wpPearent.lock()->GetLife();
 
-	if (!m_gageUnderPoly)
+	//if (!m_gageUnderPoly)
+	//{
+	//	m_gageUnderPoly = std::make_shared<KdSquarePolygon>();
+	//	m_gageUnderPoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGageUnder.png");
+	//	m_gageUnderPoly->SetScale(m_scale);
+	//}
+
+	//if (!m_gagePoly)
+	//{
+	//	m_gagePoly = std::make_shared<KdSquarePolygon>();
+	//	m_gagePoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage1.png");
+	//	m_gagePoly->SetScale(m_scale);
+	//}
+
+	//if (!m_polyTex)
+	//{
+	//	m_polyTex = std::make_shared<KdTexture>();
+	//	m_polyTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage1.png");
+	//	
+	//}
+
+	//if (!m_flamePoly)
+	//{
+	//	m_flamePoly = std::make_shared<KdSquarePolygon>();
+	//	m_flamePoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPFlame.png");
+	//	m_flamePoly->SetScale(m_scale);
+	//}
+	if (!m_flameTex)
 	{
-		m_gageUnderPoly = std::make_shared<KdSquarePolygon>();
-		m_gageUnderPoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGageUnder.png");
+		m_flameTex = std::make_shared<KdTexture>();
+		m_flameTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPFlame.png");
+	}
+		
+	if (!m_gageTex)
+	{
+		m_gageTex = std::make_shared<KdTexture>();
+		m_gageTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage.png");
 	}
 
-	if (!m_gagePoly)
+	if (!m_gageUnderTex)
 	{
-		m_gagePoly = std::make_shared<KdSquarePolygon>();
-		m_gagePoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage1.png");
+		m_gageUnderTex = std::make_shared<KdTexture>();
+		m_gageUnderTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGageUnder.png");
 	}
 
-	if (!m_polyTex)
-	{
-		m_polyTex = std::make_shared<KdTexture>();
-		m_polyTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage1.png");
-	}
-
-	if (!m_flamePoly)
-	{
-		m_flamePoly = std::make_shared<KdSquarePolygon>();
-		m_flamePoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPFlame.png");
-	}
 
 	maxlife = m_wpPearent.lock()->GetMaxLife();
 
-	m_scale = { 60,5,0 };
 
-	m_ScaleMat = Math::Matrix::CreateScale(m_scale);
+	m_ScaleMat = Math::Matrix::CreateScale(1);
+
 	m_LocalPos = { 0,50,10 };
 }
 

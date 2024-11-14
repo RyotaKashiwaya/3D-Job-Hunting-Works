@@ -82,6 +82,7 @@ void EnemyManeger::EnemyPop()
 			_rifleHP->SetChara(m_spChara);
 			_rifleHP->SetPearent(_rifleEnemy);
 			_rifleHP->SetPos(_rifleEnemy->GetPos());
+			_rifleHP->SetCamera(m_wpCam.lock());
 			_rifleHP->Init();
 
 			SceneManager::Instance().AddObject(_rifleEnemy);
