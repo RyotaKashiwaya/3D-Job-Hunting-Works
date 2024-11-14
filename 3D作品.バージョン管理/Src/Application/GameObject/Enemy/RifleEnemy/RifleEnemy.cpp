@@ -266,6 +266,11 @@ void RifleEnemy::OnHit()
 
 	if ( m_life == 0 && !IsDead)
 	{
+		if (m_life > 0)
+		{
+			m_life = 0;
+		}
+
 		IsDead = true;
 
 		std::shared_ptr<Explotion> _exp = std::make_shared<Explotion>();
