@@ -36,8 +36,8 @@ void Rifle::Update()
 				Math::Vector3 ShotDir = m_mWorld.Backward();
 				Math::Matrix RandamRot;
 
-				float x = DirectX::XMConvertToRadians(m_RandomGen->GetFloat(-1.0f, 1.0f));
-				float y = DirectX::XMConvertToRadians(m_RandomGen->GetFloat(-1.0f, 1.0f));
+				float x = DirectX::XMConvertToRadians(m_RandomGen->GetFloat(-0.5f, 0.5f));
+				float y = DirectX::XMConvertToRadians(m_RandomGen->GetFloat(-0.5f, 0.5f));
 
 				RandamRot = Math::Matrix::CreateFromYawPitchRoll({y, x, 0});
 
@@ -131,7 +131,7 @@ void Rifle::Init()
 {
 	m_RandomGen = std::make_shared<KdRandomGenerator>();
 
-	ReloadTime = 50;
+	ReloadTime = 100;
 	m_maxBullet = 30;
 	m_nowBullet = m_maxBullet;
 	ReloadCnt = ReloadTime;
@@ -210,7 +210,7 @@ void Rifle::Reload()
 		ReloadMove *= -1;
 	}
 
-	m_ReloadMove += { 0,0,ReloadMove };
+	m_ReloadMove.z += ReloadMove;
 
 	m_ReloadMoveMat = Math::Matrix::CreateTranslation(m_ReloadMove);
 }

@@ -5,6 +5,7 @@
 #include"../../../GameObject/Camera/FPSCamera/FPSCamera.h"
 #include"../../../GameObject/Effect/ShotFire/ShotFire.h"
 #include"../../../GameObject/Effect/Explosion/Explosion.h"
+#include"../../../GameObject/Enemy/RifleEnemy/HP/RifleEnemyHP.h"
 #include"../../../main.h"
 void RifleEnemy::Update()
 {
@@ -272,6 +273,8 @@ void RifleEnemy::OnHit()
 		}
 
 		IsDead = true;
+
+		m_wpUI.lock()->SetExpired(true);
 
 		std::shared_ptr<Explotion> _exp = std::make_shared<Explotion>();
 		Math::Vector3 _dir = m_wpChara.lock()->GetPos() - m_pos;

@@ -10,12 +10,6 @@ void RifleEnemyHP::Update()
 
 	std::shared_ptr<RifleEnemy> m_spEnemy = m_wpPearent.lock();
 
-	if (!m_spEnemy)
-	{
-		m_isExpired = true;
-		return;
-	}
-
 	if (m_spEnemy->GetLife() != oldLife)
 	{
 		IsHit = true;
@@ -41,7 +35,7 @@ void RifleEnemyHP::Update()
 	Math::Vector3 m_pos = m_spEnemy->GetPos() + m_LocalPos;
 	Math::Matrix m_TransMat = Math::Matrix::CreateTranslation(m_pos);
 
-	m_mWorld = m_ScaleMat *   m_RotMat * m_TransMat;
+	m_mWorld = m_ScaleMat *  m_RotMat * m_TransMat;
 }
 
 void RifleEnemyHP::DrawLit()
@@ -85,28 +79,46 @@ void RifleEnemyHP::DrawSprite()
 		_result.y += 100;
 	}
 
-	if (m_gageUnderTex)
+	if (IsHit)
 	{
-		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(0.5));
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageUnderTex, 0, 100);
+
+		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(0.3));
+		if (m_gageUnderTex)
+		{
+			KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageUnderTex, _result.x, _result.y);
+		}
+
+		if (oldLife > 6)
+		{
+			if (m_gageTex1)
+			{
+				m_rect = { 0 + ((long)m_gageTex1->GetWidth() / maxlife) * (maxlife - oldLife) ,0,(long)m_gageTex1->GetWidth()  ,(long)m_gageTex1->GetHeight() };
+				KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex1, _result.x, _result.y, m_gageTex1->GetWidth(), m_gageTex1->GetHeight(), &m_rect);
+			}
+		}
+		else if(oldLife > 3)
+		{
+			if (m_gageTex2)
+			{
+				m_rect = { 0 + ((long)m_gageTex2->GetWidth() / maxlife) * (maxlife - oldLife) ,0,(long)m_gageTex2->GetWidth()  ,(long)m_gageTex2->GetHeight() };
+				KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex2, _result.x, _result.y, m_gageTex2->GetWidth(), m_gageTex2->GetHeight(), &m_rect);
+			}
+		}
+		else
+		{
+			if (m_gageTex3)
+			{
+				m_rect = { 0 + ((long)m_gageTex3->GetWidth() / maxlife) * (maxlife - oldLife) ,0,(long)m_gageTex3->GetWidth()  ,(long)m_gageTex3->GetHeight() };
+				KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex3, _result.x, _result.y, m_gageTex3->GetWidth(), m_gageTex3->GetHeight(), &m_rect);
+			}
+		}
+		if (m_flameTex)
+		{
+			KdShaderManager::Instance().m_spriteShader.DrawTex(m_flameTex, _result.x, _result.y);
+		}
+
 		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(1));
 	}
-
-	if (m_gageTex)
-	{
-		m_rect = { 0 + ((long)m_gageTex->GetWidth() / maxlife) * (maxlife - oldLife) ,0,(long)m_gageTex->GetWidth()  ,(long)m_gageTex->GetHeight() };
-		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(0.5));
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex, 0,100,m_gageTex->GetWidth(),m_gageTex->GetHeight(), & m_rect);
-		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(1));
-	}
-
-	if (!m_flameTex)
-	{
-		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(0.5));
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_flameTex, 0, 100);
-		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(1));
-	}
-
 
 	Application::Instance().m_log.AddLog("x = %d ,y = %d,w = %d,h = %d \n", m_rect.x, m_rect.y, m_rect.width, m_rect.height);
 }
@@ -117,43 +129,26 @@ void RifleEnemyHP::Init()
 
 	oldLife = m_wpPearent.lock()->GetLife();
 
-	//if (!m_gageUnderPoly)
-	//{
-	//	m_gageUnderPoly = std::make_shared<KdSquarePolygon>();
-	//	m_gageUnderPoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGageUnder.png");
-	//	m_gageUnderPoly->SetScale(m_scale);
-	//}
-
-	//if (!m_gagePoly)
-	//{
-	//	m_gagePoly = std::make_shared<KdSquarePolygon>();
-	//	m_gagePoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage1.png");
-	//	m_gagePoly->SetScale(m_scale);
-	//}
-
-	//if (!m_polyTex)
-	//{
-	//	m_polyTex = std::make_shared<KdTexture>();
-	//	m_polyTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage1.png");
-	//	
-	//}
-
-	//if (!m_flamePoly)
-	//{
-	//	m_flamePoly = std::make_shared<KdSquarePolygon>();
-	//	m_flamePoly->SetMaterial("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPFlame.png");
-	//	m_flamePoly->SetScale(m_scale);
-	//}
 	if (!m_flameTex)
 	{
 		m_flameTex = std::make_shared<KdTexture>();
 		m_flameTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPFlame.png");
 	}
 		
-	if (!m_gageTex)
+	if (!m_gageTex1)
 	{
-		m_gageTex = std::make_shared<KdTexture>();
-		m_gageTex->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage.png");
+		m_gageTex1 = std::make_shared<KdTexture>();
+		m_gageTex1->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage1.png");
+	}
+	if (!m_gageTex2)
+	{
+		m_gageTex2 = std::make_shared<KdTexture>();
+		m_gageTex2->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage2.png");
+	}
+	if (!m_gageTex3)
+	{
+		m_gageTex3 = std::make_shared<KdTexture>();
+		m_gageTex3->Load("Asset/Textures/Object/UI/EnemyUI/EnemyHP/EnemyHPGage3.png");
 	}
 
 	if (!m_gageUnderTex)
@@ -166,7 +161,7 @@ void RifleEnemyHP::Init()
 	maxlife = m_wpPearent.lock()->GetMaxLife();
 
 
-	m_ScaleMat = Math::Matrix::CreateScale(1);
+	m_ScaleMat = Math::Matrix::CreateScale(0.5);
 
 	m_LocalPos = { 0,50,10 };
 }

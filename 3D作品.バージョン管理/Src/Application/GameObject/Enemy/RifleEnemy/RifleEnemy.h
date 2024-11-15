@@ -4,6 +4,7 @@
 
 class Character;
 class Explotion;
+class RifleEnemyHP;
 
 class RifleEnemy :public EnemyBase
 {
@@ -33,6 +34,8 @@ public:
 
 	int GetLife() { return m_life; }
 	int GetMaxLife() { return m_Maxlife; }
+
+	void SetUI(std::shared_ptr<RifleEnemyHP> _ptr) { m_wpUI = _ptr; }
 private:
 
 
@@ -50,6 +53,7 @@ private:
 
 	std::weak_ptr<Character> m_wpChara;
 	std::weak_ptr<Explotion> m_wpExp;
+	std::weak_ptr<RifleEnemyHP> m_wpUI;
 
 	int						 m_Maxlife = 10;
 	int						 m_life = m_Maxlife;

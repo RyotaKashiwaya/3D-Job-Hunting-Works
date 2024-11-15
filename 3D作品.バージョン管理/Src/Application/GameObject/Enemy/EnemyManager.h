@@ -36,7 +36,7 @@ private:
 	std::vector<std::shared_ptr<EnemyBase>> m_enemyList;
 
 	int							_nowTotalEnemy = 0; 
-	static const int			MaxEnemyNum = 1;
+	static const int			MaxEnemyNum = 3;
 
 	int							EnemyPopCnt = 0;
 	int							EnemyPopCntNum = 0;

@@ -46,10 +46,11 @@ private:
 	//std::shared_ptr<KdSquarePolygon> m_gageUnderPoly = nullptr;
 
 	std::shared_ptr<KdTexture> m_flameTex = nullptr;
-	std::shared_ptr<KdTexture> m_gageTex = nullptr;
+	std::shared_ptr<KdTexture> m_gageTex1 = nullptr;
+	std::shared_ptr<KdTexture> m_gageTex2 = nullptr;
+	std::shared_ptr<KdTexture> m_gageTex3 = nullptr;
 	std::shared_ptr<KdTexture> m_gageUnderTex = nullptr;
 
-	std::shared_ptr<KdTexture>		 m_polyTex = nullptr;
 
 	Math::Matrix					 m_ScaleMat;
 	Math::Matrix					 m_RotMat;

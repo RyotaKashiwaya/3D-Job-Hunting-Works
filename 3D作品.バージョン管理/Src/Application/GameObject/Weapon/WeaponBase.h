@@ -72,7 +72,7 @@ protected:
 	int	 ReloadTime = {};
 	int	 ReloadCnt = {};
 
-	float ReloadMovePow = -0.005;
+	float ReloadMovePow = -0.003;
 	float ReloadMove = ReloadMovePow;
 
 };
