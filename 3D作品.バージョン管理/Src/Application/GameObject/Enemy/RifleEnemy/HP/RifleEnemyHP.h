@@ -2,7 +2,7 @@
 
 class RifleEnemy;
 class Character;
-
+class GameUI;
 
 
 class RifleEnemyHP :public KdGameObject
@@ -10,8 +10,6 @@ class RifleEnemyHP :public KdGameObject
 public:
 
 	void Update()override;
-
-	void DrawLit()override;
 
 	void DrawSprite()override;
 
@@ -22,16 +20,9 @@ public:
 		m_wpPearent = _ptr;
 	}
 
-	void SetChara(std::shared_ptr<Character> _ptr)
-	{
-		m_wpChara = _ptr;
-	}
-
-	void SetCamera(std::shared_ptr<KdCamera> _ptr)
-	{
-		m_wpCam = _ptr;
-	}
-
+	void SetChara(std::shared_ptr<Character> _ptr){m_wpChara = _ptr;}
+	void SetCamera(std::shared_ptr<KdCamera> _ptr){m_wpCam = _ptr;}
+	void SetGameUI(std::shared_ptr<GameUI> _ptr){m_wpGameUI = _ptr;}
 	void SetExpired(bool _flg) { m_isExpired = _flg; }
 
 	void Rotate();
@@ -40,6 +31,7 @@ private:
 	std::weak_ptr<RifleEnemy> m_wpPearent;
 	std::weak_ptr<Character> m_wpChara;
 	std::weak_ptr<KdCamera> m_wpCam;
+	std::weak_ptr<GameUI> m_wpGameUI;
 
 	//std::shared_ptr<KdSquarePolygon> m_flamePoly = nullptr;
 	//std::shared_ptr<KdSquarePolygon> m_gagePoly = nullptr;

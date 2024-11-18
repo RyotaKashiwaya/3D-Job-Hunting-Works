@@ -15,6 +15,8 @@ public:
 	void TimeCount();
 
 	void TimeStopForHit();
+
+	bool GetGameEnd() { return IsGameEnd; }
 private:
 	std::shared_ptr<KdRandomGenerator>	m_RandomGen;
 
@@ -50,5 +52,17 @@ private:
 	bool					   IsNowHit = false;
 	int						   StopTimeCnt = 0;
 	int						   StopTimeNum = 0;
+
+	bool					   IsGameEnd = false;
+
+	float					   intensity = 0;
+
+public:
+
+	static GameUI& Instance()
+	{
+		static GameUI instance;
+		return instance;
+	}
 
 };

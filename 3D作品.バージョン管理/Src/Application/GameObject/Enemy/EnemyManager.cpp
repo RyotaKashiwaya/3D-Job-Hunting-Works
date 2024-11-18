@@ -5,6 +5,7 @@
 #include"../../GameObject/Weapon/Rifle/Rifle.h"
 #include"../../GameObject/Bullet/Rifle/RifleBullet.h"
 #include"../../GameObject/Character/Character.h"
+#include"../../GameObject/UI/GameUI/GameUI.h"
 #include"../../main.h"
 void EnemyManeger::Update()
 {
@@ -83,6 +84,7 @@ void EnemyManeger::EnemyPop()
 			_rifleHP->SetPearent(_rifleEnemy);
 			_rifleHP->SetPos(_rifleEnemy->GetPos());
 			_rifleHP->SetCamera(m_wpCam.lock());
+			_rifleHP->SetGameUI(m_wpGameUI.lock());
 			_rifleHP->Init();
 
 			_rifleEnemy->SetUI(_rifleHP);

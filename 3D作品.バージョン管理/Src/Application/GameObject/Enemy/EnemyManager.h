@@ -4,6 +4,7 @@ class EnemyBase;
 class Rifle;
 class Character;
 class FPSCamera;
+class GameUI;
 
 #define MAXENEMYNUM = 5;
 
@@ -18,7 +19,7 @@ public:
 	void SetRifle(std::shared_ptr<Rifle> _ptr) { m_wpRifle = _ptr; }
 	void SetChara(std::shared_ptr<Character> _ptr) { m_spChara = _ptr; }
 	void SetCamera(std::shared_ptr<KdCamera> _ptr) { m_wpCam = _ptr; }
-
+	void SetGameUI(std::shared_ptr<GameUI> _ptr){m_wpGameUI = _ptr;}
 	void BulletHit();
 
 	void EnemyDet() { _nowTotalEnemy--; }
@@ -32,6 +33,7 @@ private:
 	std::weak_ptr<Rifle> m_wpRifle;
 	std::shared_ptr<Character> m_spChara;
 	std::weak_ptr<KdCamera> m_wpCam;
+	std::weak_ptr<GameUI> m_wpGameUI;
 
 	std::vector<std::shared_ptr<EnemyBase>> m_enemyList;
 

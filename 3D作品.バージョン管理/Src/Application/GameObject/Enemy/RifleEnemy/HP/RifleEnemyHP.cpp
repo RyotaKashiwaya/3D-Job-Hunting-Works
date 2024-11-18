@@ -2,6 +2,7 @@
 #include"../../RifleEnemy/RifleEnemy.h"
 #include"../../../../GameObject/Character/Character.h";
 #include"../../../../GameObject/Camera/FPSCamera/FPSCamera.h"
+#include"../../../../GameObject/UI/GameUI/GameUI.h"
 #include"../../../../main.h";
 void RifleEnemyHP::Update()
 {
@@ -38,88 +39,64 @@ void RifleEnemyHP::Update()
 	m_mWorld = m_ScaleMat *  m_RotMat * m_TransMat;
 }
 
-void RifleEnemyHP::DrawLit()
-{
-
-	//if (IsHit)
-	//{
-	//	if (m_gageUnderPoly)
-	//	{
-	//		m_rect = { 0,0, (long)m_polyTex->GetWidth(),(long)m_polyTex->GetHeight()};
-	//		m_gageUnderPoly->SetUVRect(m_rect);
-	//		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_gageUnderPoly, m_mWorld);
-	//	}
-
-	//	if (m_gagePoly)
-	//	{
-	//		m_rect = { 0,0,(long)m_polyTex->GetWidth() - (((long)m_polyTex->GetWidth() / maxlife) * oldLife), (long)m_polyTex->GetHeight() };
-	//		m_gagePoly->SetUVRect(m_rect);
-	//		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_gagePoly, m_mWorld);
-	//	}
-	//	if (m_flamePoly)
-	//	{
-	//		m_rect = { 0,0, (long)m_polyTex->GetWidth(),(long)m_polyTex->GetHeight()};
-	//		m_flamePoly->SetUVRect(m_rect);
-	//		KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_flamePoly, m_mWorld);
-	//	}
-	//}
-
-}
-
 void RifleEnemyHP::DrawSprite()
 {
+	
 
+		Math::Vector3 _result = Math::Vector3::Zero;
+		std::shared_ptr<KdCamera> _cam = m_wpCam.lock();
+		std::shared_ptr<GameUI> _ui = m_wpGameUI.lock();
 
-	Math::Vector3 _result = Math::Vector3::Zero;
-	std::shared_ptr<KdCamera> _cam = m_wpCam.lock();
-
-	if (_cam)
-	{
-		_cam->ConvertWorldToScreenDetail(GetPos(), _result);
-		_result.y += 100;
-	}
-
-	if (IsHit)
-	{
-
-		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(0.3));
-		if (m_gageUnderTex)
+		if (_cam)
 		{
-			KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageUnderTex, _result.x, _result.y);
+			_cam->ConvertWorldToScreenDetail(GetPos(), _result);
+			_result.y += 100;
 		}
 
-		if (oldLife > 6)
+		if (IsHit)
 		{
-			if (m_gageTex1)
+			if (_ui->GetGameEnd() == false)
 			{
-				m_rect = { 0 + ((long)m_gageTex1->GetWidth() / maxlife) * (maxlife - oldLife) ,0,(long)m_gageTex1->GetWidth()  ,(long)m_gageTex1->GetHeight() };
-				KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex1, _result.x, _result.y, m_gageTex1->GetWidth(), m_gageTex1->GetHeight(), &m_rect);
+				KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(0.3));
+				if (m_gageUnderTex)
+				{
+					KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageUnderTex, _result.x, _result.y);
+				}
+
+				if (oldLife > 6)
+				{
+					if (m_gageTex1)
+					{
+						m_rect = { 0 + ((long)m_gageTex1->GetWidth() / maxlife) * (maxlife - oldLife) ,0,(long)m_gageTex1->GetWidth()  ,(long)m_gageTex1->GetHeight() };
+						KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex1, _result.x, _result.y, m_gageTex1->GetWidth(), m_gageTex1->GetHeight(), &m_rect);
+					}
+				}
+				else if (oldLife > 3)
+				{
+					if (m_gageTex2)
+					{
+						m_rect = { 0 + ((long)m_gageTex2->GetWidth() / maxlife) * (maxlife - oldLife) ,0,(long)m_gageTex2->GetWidth()  ,(long)m_gageTex2->GetHeight() };
+						KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex2, _result.x, _result.y, m_gageTex2->GetWidth(), m_gageTex2->GetHeight(), &m_rect);
+					}
+				}
+				else
+				{
+					if (m_gageTex3)
+					{
+						m_rect = { 0 + ((long)m_gageTex3->GetWidth() / maxlife) * (maxlife - oldLife) ,0,(long)m_gageTex3->GetWidth()  ,(long)m_gageTex3->GetHeight() };
+						KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex3, _result.x, _result.y, m_gageTex3->GetWidth(), m_gageTex3->GetHeight(), &m_rect);
+					}
+				}
+				if (m_flameTex)
+				{
+					KdShaderManager::Instance().m_spriteShader.DrawTex(m_flameTex, _result.x, _result.y);
+				}
+
+				KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(1));
 			}
 		}
-		else if(oldLife > 3)
-		{
-			if (m_gageTex2)
-			{
-				m_rect = { 0 + ((long)m_gageTex2->GetWidth() / maxlife) * (maxlife - oldLife) ,0,(long)m_gageTex2->GetWidth()  ,(long)m_gageTex2->GetHeight() };
-				KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex2, _result.x, _result.y, m_gageTex2->GetWidth(), m_gageTex2->GetHeight(), &m_rect);
-			}
-		}
-		else
-		{
-			if (m_gageTex3)
-			{
-				m_rect = { 0 + ((long)m_gageTex3->GetWidth() / maxlife) * (maxlife - oldLife) ,0,(long)m_gageTex3->GetWidth()  ,(long)m_gageTex3->GetHeight() };
-				KdShaderManager::Instance().m_spriteShader.DrawTex(m_gageTex3, _result.x, _result.y, m_gageTex3->GetWidth(), m_gageTex3->GetHeight(), &m_rect);
-			}
-		}
-		if (m_flameTex)
-		{
-			KdShaderManager::Instance().m_spriteShader.DrawTex(m_flameTex, _result.x, _result.y);
-		}
 
-		KdShaderManager::Instance().m_spriteShader.SetMatrix(Math::Matrix::CreateScale(1));
-	}
-
+	
 	Application::Instance().m_log.AddLog("x = %d ,y = %d,w = %d,h = %d \n", m_rect.x, m_rect.y, m_rect.width, m_rect.height);
 }
 

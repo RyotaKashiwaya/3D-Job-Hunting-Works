@@ -123,6 +123,7 @@ void GameScene::Init()
 	enemyManeger->SetRifle(gun);
 	enemyManeger->SetChara(character);
 	enemyManeger->SetCamera(_fpscam->GetCamera());
+	enemyManeger->SetGameUI(gameUI);
 }
 
 void GameScene::Event()
