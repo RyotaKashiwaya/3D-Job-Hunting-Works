@@ -2,7 +2,18 @@
 #include"../../../Scene/SceneManager.h"
 void ResultUI::Update()
 {
-
+	if (!IsScoreDisplay)
+	{
+		m_TimeRectNum3 = m_RandomGen->GetInt(0, 9);
+		m_TimeRectNum2 = m_RandomGen->GetInt(0, 9);
+		m_TimeRectNum1 = m_RandomGen->GetInt(0, 9);
+	}
+	else
+	{
+		m_TimeRectNum3 = GameScore % 10;
+		m_TimeRectNum2 = (GameScore / 10) % 6;
+		m_TimeRectNum1 = (GameScore / 60) % 10;
+	}
 
 	if (ScoreDisplayTime > 0)
 	{
@@ -52,9 +63,6 @@ void ResultUI::Init()
 
 	GameScore = SceneManager::Instance().GatData(0);
 
-	m_TimeRectNum3 = GameScore % 10;
-	m_TimeRectNum2 = (GameScore / 10) % 6;
-	m_TimeRectNum1 = (GameScore / 60) % 10;
 
 	if (!m_scoreRankTex)
 	{
