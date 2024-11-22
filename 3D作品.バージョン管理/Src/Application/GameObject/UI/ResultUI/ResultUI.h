@@ -29,6 +29,8 @@ private:
 	int						   m_TimeRectNum2 = 0;
 	int						   m_TimeRectNum3 = 0;
 
+	std::shared_ptr<KdTexture> m_StrTimeTex = nullptr;
+
 	std::shared_ptr<KdTexture> m_scoreTimeTex = nullptr;
 
 	std::shared_ptr<KdTexture> m_scoreTimeColonTex = nullptr;
@@ -43,5 +45,6 @@ private:
 	Math::Vector3			   m_scorePos = {};
 	Math::Vector3			   m_timePos = {};
 
-
+	float					rectNum1 = 0;
+	float					rectNum2 = 0;
 };
