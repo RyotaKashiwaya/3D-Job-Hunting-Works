@@ -77,18 +77,44 @@ void ResultUI::DrawSprite()
 		m_timeRect = { 0 + ((long)(m_scoreTimeTex->GetWidth() / 10) * m_TimeRectNum3),0,(long)(m_scoreTimeTex->GetWidth() / 10) ,(long)m_scoreTimeTex->GetHeight()};
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeTex, m_timePos.x + 120, m_timePos.y, m_timeRect.width, m_timeRect.height, &m_timeRect, &m_timeColor);
 	}
+
+	if (rectCnt > 5)
+	{
+		if (Colintensity < 0.4)
+		{
+			Colintensity += 0.005;
+		}
+		else
+		{
+			Colintensity = 0.4;
+		}
+		color = { 0.3f,0.3f,0.3f,Colintensity};
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_StrResultTex1, -435, 185, nullptr, &color, { (0.0f),(0.5f) });
+	}
+	else
+	{
+		while (1)
+		{
+			int i = m_RandomGen->GetInt(0, 5);
+			if (rectNumEnable[i] == false)
+			{
+				rectNum[i] = i;
+				rectNumEnable[i] = true;
+				rectCnt++;
+			}
+
+			int a = rectNum[i];
+		}
+
 	
-	if (rectNum1 > 5)rectNum1 = 0;
-	if (rectNum1 > 10)rectNum2 = 0;
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		m_strRect = { 0,0,0 + (long)(m_StrResultTex1->GetWidth() / 6 * rectNum[i]),(long)m_StrResultTex1->GetHeight()};
+		color = { 1,1,1,1 };
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_StrResultTex1, -450, 200, m_strRect.width, m_strRect.height, &m_strRect, &color, { (0.0f),(0.5f) });
+	}
 
-	Math::Rectangle _rect1 = { 0 + (long)(rectNum1 * m_StrTimeTex->GetWidth()/6) ,0,(long)m_StrTimeTex->GetWidth(),(long)m_StrTimeTex->GetHeight()};
-	KdShaderManager::Instance().m_spriteShader.DrawTex(m_StrTimeTex, 0, 300, _rect1.width, _rect1.height, &_rect1);
-
-	Math::Rectangle _rect2 = { 0 +  (long)(rectNum2 * m_StrTimeTex->GetWidth() / 6) ,0,(long)m_StrTimeTex->GetWidth(),(long)m_StrTimeTex->GetHeight() };
-	KdShaderManager::Instance().m_spriteShader.DrawTex(m_StrTimeTex, 0, 300, _rect2.width, _rect2.height, &_rect2);
-
-	rectNum1 += 0.1;
-	rectNum2 += 0.1;
 }
 
 void ResultUI::Init()
@@ -97,12 +123,11 @@ void ResultUI::Init()
 
 	GameScore = SceneManager::Instance().GatData(0);
 
-	if (!m_StrTimeTex)
+	if (!m_StrResultTex1)
 	{
-		m_StrTimeTex = std::make_shared<KdTexture>();
-		m_StrTimeTex->Load("Asset/Textures/Scene/Result/ResultStr.png");
+		m_StrResultTex1 = std::make_shared<KdTexture>();
+		m_StrResultTex1->Load("Asset/Textures/Scene/Result/ResultStr1.png");
 	}
-
 
 	if (!m_scoreRankTex)
 	{
@@ -119,6 +144,14 @@ void ResultUI::Init()
 	{
 		m_scoreTimeTex = std::make_shared<KdTexture>();
 		m_scoreTimeTex->Load("Asset/Textures/Scene/Result/Number.png");
+	}
+
+	int n = 0;
+	for (auto& i : rectNumEnable)
+	{
+		i = false;
+		rectNum[n] = 0;
+		n++;
 	}
 
 }
