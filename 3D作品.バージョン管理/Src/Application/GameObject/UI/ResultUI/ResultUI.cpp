@@ -101,6 +101,7 @@ void ResultUI::DrawSprite()
 				rectNum[i] = i;
 				rectNumEnable[i] = true;
 				rectCnt++;
+				break;
 			}
 
 			int a = rectNum[i];
@@ -151,6 +152,7 @@ void ResultUI::Init()
 	{
 		i = false;
 		rectNum[n] = 0;
+		Intensity[n] = 0;
 		n++;
 	}
 
