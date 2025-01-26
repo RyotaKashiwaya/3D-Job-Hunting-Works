@@ -47,10 +47,7 @@ private:
 	Math::Vector3			   m_timePos = {};
 
 	int						rectNum[6];
-	float					Intensity[6];
-	int						rectCnt = 0;
 
-	bool					rectNumEnable[6];
 
 	Math::Color color = { };
 	float Colintensity = 0;

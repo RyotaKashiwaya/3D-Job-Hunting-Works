@@ -1,5 +1,6 @@
 ﻿#include "ResultUI.h"
 #include"../../../Scene/SceneManager.h"
+#include"../../../main.h"
 void ResultUI::Update()
 {
 	if (!IsScoreDisplay)
@@ -69,49 +70,42 @@ void ResultUI::DrawSprite()
 	if (m_scoreTimeTex)
 	{
 		m_timeRect = { 0 + ((long)(m_scoreTimeTex->GetWidth() / 10) * m_TimeRectNum1),0,(long)(m_scoreTimeTex->GetWidth() / 10) ,(long)m_scoreTimeTex->GetHeight() };
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeTex, m_timePos.x - 60, m_timePos.y, m_timeRect.width, m_timeRect.height, &m_timeRect,&m_timeColor);
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeTex, m_timePos.x - 60, m_timePos.y, m_timeRect.width, m_timeRect.height, &m_timeRect, &m_timeColor);
 
-		m_timeRect = { 0 + ((long)(m_scoreTimeTex->GetWidth() / 10) * m_TimeRectNum2),0,(long)(m_scoreTimeTex->GetWidth() / 10) ,(long)m_scoreTimeTex->GetHeight()};
+		m_timeRect = { 0 + ((long)(m_scoreTimeTex->GetWidth() / 10) * m_TimeRectNum2),0,(long)(m_scoreTimeTex->GetWidth() / 10) ,(long)m_scoreTimeTex->GetHeight() };
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeTex, m_timePos.x + 60, m_timePos.y, m_timeRect.width, m_timeRect.height, &m_timeRect, &m_timeColor);
 
-		m_timeRect = { 0 + ((long)(m_scoreTimeTex->GetWidth() / 10) * m_TimeRectNum3),0,(long)(m_scoreTimeTex->GetWidth() / 10) ,(long)m_scoreTimeTex->GetHeight()};
+		m_timeRect = { 0 + ((long)(m_scoreTimeTex->GetWidth() / 10) * m_TimeRectNum3),0,(long)(m_scoreTimeTex->GetWidth() / 10) ,(long)m_scoreTimeTex->GetHeight() };
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeTex, m_timePos.x + 120, m_timePos.y, m_timeRect.width, m_timeRect.height, &m_timeRect, &m_timeColor);
 	}
 
-	if (rectCnt > 5)
+
+	if (Colintensity < 0.4)
 	{
-		if (Colintensity < 0.4)
-		{
-			Colintensity += 0.005;
-		}
-		else
-		{
-			Colintensity = 0.4;
-		}
-		color = { 0.3f,0.3f,0.3f,Colintensity};
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_StrResultTex1, -435, 185, nullptr, &color, { (0.0f),(0.5f) });
+		Colintensity += 0.005;
 	}
 	else
 	{
-		while (1)
-		{
-			int i = m_RandomGen->GetInt(0, 5);
-			if (rectNumEnable[i] == false)
-			{
-				rectNum[i] = i;
-				rectNumEnable[i] = true;
-				rectCnt++;
-				break;
-			}
-
-			int a = rectNum[i];
-		}
-
-	
+		Colintensity = 0.4;
 	}
+	color = { 0.3f,0.3f,0.3f,Colintensity };
+	KdShaderManager::Instance().m_spriteShader.DrawTex(m_StrResultTex1, -435, 185, nullptr, &color, { (0.0f),(0.5f) });
+
 	for (int i = 0; i < 6; i++)
 	{
-		m_strRect = { 0,0,0 + (long)(m_StrResultTex1->GetWidth() / 6 * rectNum[i]),(long)m_StrResultTex1->GetHeight()};
+		if (rectNum[i] <= 1)
+		{
+			rectNum[i] += 0.001;
+		}
+		else
+		{
+			rectNum[i] = 1;
+		}
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		m_strRect = { 0,0,0 + (long)(m_StrResultTex1->GetWidth() / 6 * i * rectNum[i]),(long)m_StrResultTex1->GetHeight() };
 		color = { 1,1,1,1 };
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_StrResultTex1, -450, 200, m_strRect.width, m_strRect.height, &m_strRect, &color, { (0.0f),(0.5f) });
 	}
@@ -135,9 +129,9 @@ void ResultUI::Init()
 		m_scoreRankTex = std::make_shared<KdTexture>();
 		m_scoreRankTex->Load("Asset/Textures/Scene/Result/scoreRank.png");
 	}
-	
+
 	if (!m_scoreTimeColonTex)
-	{                                                   
+	{
 		m_scoreTimeColonTex = std::make_shared<KdTexture>();
 		m_scoreTimeColonTex->Load("Asset/Textures/Scene/Result/timeColon.png");
 	}
@@ -147,13 +141,10 @@ void ResultUI::Init()
 		m_scoreTimeTex->Load("Asset/Textures/Scene/Result/Number.png");
 	}
 
-	int n = 0;
-	for (auto& i : rectNumEnable)
+
+	for (int i = 0; i < 6; i++)
 	{
-		i = false;
-		rectNum[n] = 0;
-		Intensity[n] = 0;
-		n++;
+		rectNum[i] = 0;
 	}
 
 }
