@@ -55,7 +55,7 @@ private:
 	std::weak_ptr<Explotion> m_wpExp;
 	std::weak_ptr<RifleEnemyHP> m_wpUI;
 
-	int						 m_Maxlife = 10;
+	int						 m_Maxlife = 5;
 	int						 m_life = m_Maxlife;
 
 	float					 m_popPosX = {};

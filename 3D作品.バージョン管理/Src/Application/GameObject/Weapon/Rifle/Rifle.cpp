@@ -49,7 +49,7 @@ void Rifle::Update()
 				_bullet->Init();
 				_bullet->Shot(_mzzlePos, ShotDir);
 
-				KdAudioManager::Instance().Play("Asset/Sounds/GameObject/Weapon/Rifle/Shot.wav")->SetVolume(0.2f);
+				KdAudioManager::Instance().Play("Asset/Sounds/GameObject/Weapon/Rifle/Shot.wav")->SetVolume(0.05f);
 
 				IsFire = true;
 

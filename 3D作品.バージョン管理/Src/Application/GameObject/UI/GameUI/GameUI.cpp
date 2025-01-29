@@ -10,12 +10,14 @@ void GameUI::Update()
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		SceneManager::Instance().SetNextScene(SceneManager::SceneType::Title);
+		SceneManager::Instance().TransferData(m_time);
+		KdAudioManager::Instance().StopAllSound();
+		IsGameEnd = true;
 	}
 
 	if (!IsNowHit)
 	{
-		if (m_rectNum == 5)
+		if (m_rectNum == 100)
 		{
 			SceneManager::Instance().TransferData(m_time);
 			IsGameEnd = true;
@@ -23,7 +25,7 @@ void GameUI::Update()
 
 		if (m_ScoreRect == (m_RemainingGoal * 60) / 100)
 		{
-			m_rectNum++;
+			m_rectNum += 2;
 			m_ScoreRect = 0;
 		}
 		else
@@ -111,7 +113,7 @@ void GameUI::DrawSprite()
 
 void GameUI::Init()
 {
-	
+	KdAudioManager::Instance().Play("Asset/Sounds/Scene/GameScene/battle.wav", true)->SetVolume(0.2);
 
 	if (!m_spTimeColonTex)
 	{

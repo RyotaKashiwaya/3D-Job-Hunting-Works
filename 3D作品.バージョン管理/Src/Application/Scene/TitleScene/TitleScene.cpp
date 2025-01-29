@@ -1,17 +1,18 @@
 ﻿#include "TitleScene.h"
 #include "../SceneManager.h"
+#include"../../GameObject/UI/TitleUI/TitleUI.h"
 
 void TitleScene::Init()
 {
+
+
+	std::shared_ptr<TitleUI> titleui = std::make_shared<TitleUI>();
+	titleui->Init();
+	AddObject(titleui);
+
 }
 
 void TitleScene::Event()
 {
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
-	{
-		SceneManager::Instance().SetNextScene
-		(
-			SceneManager::SceneType::Result
-		);
-	}
+	
 }

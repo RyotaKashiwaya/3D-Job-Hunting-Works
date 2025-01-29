@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+class GameUI;
+
 class WeaponBase;
 
 class GunUI :public KdGameObject
@@ -20,8 +22,16 @@ public:
 		m_wpGun = _gun;
 	}
 
+	void SetGameUI(const std::shared_ptr<GameUI>& _ui)
+	{
+		m_wpUI = _ui;
+	}
+
 private:
 	std::weak_ptr<WeaponBase>	m_wpGun;
+	std::weak_ptr<GameUI>	m_wpUI;
+
+
 	std::shared_ptr<WeaponBase> m_spGun;
 	std::shared_ptr<KdTexture> m_spBulletNunTex;
 	std::shared_ptr<KdTexture> m_spReloadText;

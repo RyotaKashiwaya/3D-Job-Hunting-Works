@@ -177,6 +177,7 @@
     <ClInclude Include="Src\Application\GameObject\UI\GunUI\GunUI.h" />
     <ClInclude Include="Src\Application\GameObject\UI\ResultUI\ResultUI.h" />
     <ClInclude Include="Src\Application\GameObject\UI\Reticle\Reticle.h" />
+    <ClInclude Include="Src\Application\GameObject\UI\TitleUI\TitleUI.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\Rifle\Rifle.h" />
     <ClInclude Include="Src\Application\GameObject\Weapon\WeaponBase.h" />
     <ClInclude Include="Src\Application\main.h" />
@@ -252,6 +253,7 @@
     <ClCompile Include="Src\Application\GameObject\UI\GunUI\GunUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\UI\ResultUI\ResultUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\UI\Reticle\Reticle.cpp" />
+    <ClCompile Include="Src\Application\GameObject\UI\TitleUI\TitleUI.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\Rifle\Rifle.cpp" />
     <ClCompile Include="Src\Application\GameObject\Weapon\WeaponBase.cpp" />
     <ClCompile Include="Src\Application\main.cpp" />

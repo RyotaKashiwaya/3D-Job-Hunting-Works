@@ -17,6 +17,8 @@ public:
 	void TimeStopForHit();
 
 	bool GetGameEnd() { return IsGameEnd; }
+
+
 private:
 	std::shared_ptr<KdRandomGenerator>	m_RandomGen;
 

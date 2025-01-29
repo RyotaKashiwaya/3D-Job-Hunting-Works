@@ -38,6 +38,8 @@ private:
 
 	std::shared_ptr<KdTexture> m_scoreRankTex = nullptr;
 
+	std::shared_ptr<KdTexture> m_backTex = nullptr;
+
 	int GameScore = {};
 
 	int ScoreDisplayTime = 120;
@@ -46,7 +48,10 @@ private:
 	Math::Vector3			   m_scorePos = {};
 	Math::Vector3			   m_timePos = {};
 
-	int						rectNum[6];
+	bool					resultTextDraw[7];
+	bool					DrawEnd = false;
+	int						Cnt = 0;
+	int						CntNum = 0;
 
 
 	Math::Color color = { };

@@ -145,6 +145,9 @@
     <Filter Include="Src\Application\GameObject\Enemy\RifleEnemy\HP">
       <UniqueIdentifier>{f5f425fa-3fc2-4b47-acd4-f77a6704a61f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\UI\TitleUI">
+      <UniqueIdentifier>{7cffa02c-d484-4ae9-9244-9fffe69b258b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -387,6 +390,9 @@
     <ClInclude Include="Src\Application\GameObject\Enemy\RifleEnemy\HP\RifleEnemyHP.h">
       <Filter>Src\Application\GameObject\Enemy\RifleEnemy\HP</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\UI\TitleUI\TitleUI.h">
+      <Filter>Src\Application\GameObject\UI\TitleUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -601,6 +607,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Enemy\RifleEnemy\HP\RifleEnemyHP.cpp">
       <Filter>Src\Application\GameObject\Enemy\RifleEnemy\HP</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\UI\TitleUI\TitleUI.cpp">
+      <Filter>Src\Application\GameObject\UI\TitleUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

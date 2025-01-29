@@ -120,6 +120,7 @@ void GameScene::Init()
 	_fpscam->SetTarget(character);
 	_fpscam->SetWeapon(gun);
 	gun->SetParent(character);
+	gunui->SetGameUI(gameUI);
 	enemyManeger->SetRifle(gun);
 	enemyManeger->SetChara(character);
 	enemyManeger->SetCamera(_fpscam->GetCamera());

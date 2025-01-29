@@ -3,6 +3,12 @@
 #include"../../../main.h"
 void ResultUI::Update()
 {
+	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	{
+		KdAudioManager::Instance().StopAllSound();
+		SceneManager::Instance().SetNextScene(SceneManager::SceneType::Title);
+	}
+
 	if (!IsScoreDisplay)
 	{
 
@@ -52,6 +58,12 @@ void ResultUI::Update()
 
 void ResultUI::DrawSprite()
 {
+	CntNum++;
+	
+	if (m_backTex)
+	{
+		KdShaderManager::Instance().m_spriteShader.DrawTex(m_backTex, 0, 0);
+	}
 
 	if (m_scoreRankTex)
 	{
@@ -79,41 +91,51 @@ void ResultUI::DrawSprite()
 		KdShaderManager::Instance().m_spriteShader.DrawTex(m_scoreTimeTex, m_timePos.x + 120, m_timePos.y, m_timeRect.width, m_timeRect.height, &m_timeRect, &m_timeColor);
 	}
 
-
-	if (Colintensity < 0.4)
+	if (DrawEnd)
 	{
-		Colintensity += 0.005;
-	}
-	else
-	{
-		Colintensity = 0.4;
+		if (Colintensity < 0.4)
+		{
+			Colintensity += 0.005;
+		}
+		else
+		{
+			Colintensity = 0.4;
+		}
 	}
 	color = { 0.3f,0.3f,0.3f,Colintensity };
 	KdShaderManager::Instance().m_spriteShader.DrawTex(m_StrResultTex1, -435, 185, nullptr, &color, { (0.0f),(0.5f) });
 
-	for (int i = 0; i < 6; i++)
+	if (CntNum == 3)
 	{
-		if (rectNum[i] <= 1)
+		CntNum = 0;
+		resultTextDraw[Cnt] = true;
+		if (Cnt < 8)
 		{
-			rectNum[i] += 0.001;
+			Cnt++;
 		}
 		else
 		{
-			rectNum[i] = 1;
+			Cnt = 7;
+			DrawEnd = true;
 		}
 	}
 
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 7; i++)
 	{
-		m_strRect = { 0,0,0 + (long)(m_StrResultTex1->GetWidth() / 6 * i * rectNum[i]),(long)m_StrResultTex1->GetHeight() };
-		color = { 1,1,1,1 };
-		KdShaderManager::Instance().m_spriteShader.DrawTex(m_StrResultTex1, -450, 200, m_strRect.width, m_strRect.height, &m_strRect, &color, { (0.0f),(0.5f) });
+		if (resultTextDraw[i])
+		{
+			m_strRect = { 0,0,0 + (long)(m_StrResultTex1->GetWidth() / 6 * i),(long)m_StrResultTex1->GetHeight() };
+			color = { 1,1,1,1 };
+			KdShaderManager::Instance().m_spriteShader.DrawTex(m_StrResultTex1, -450, 200, m_strRect.width, m_strRect.height, &m_strRect, &color, { (0.0f),(0.5f) });
+		}
 	}
 
 }
 
 void ResultUI::Init()
 {
+	KdAudioManager::Instance().Play("Asset/Sounds/Scene/ResultScene/resultbgm.wav")->SetVolume(0.15);
+
 	m_RandomGen = std::make_shared<KdRandomGenerator>();
 
 	GameScore = SceneManager::Instance().GatData(0);
@@ -140,11 +162,15 @@ void ResultUI::Init()
 		m_scoreTimeTex = std::make_shared<KdTexture>();
 		m_scoreTimeTex->Load("Asset/Textures/Scene/Result/Number.png");
 	}
-
-
-	for (int i = 0; i < 6; i++)
+	if (!m_backTex)
 	{
-		rectNum[i] = 0;
+		m_backTex = std::make_shared<KdTexture>();
+		m_backTex->Load("Asset/Textures/Scene/Result/back.png");
+	}
+
+	for (int i = 0; i < 7; i++)
+	{
+		resultTextDraw[i] = false;
 	}
 
 }

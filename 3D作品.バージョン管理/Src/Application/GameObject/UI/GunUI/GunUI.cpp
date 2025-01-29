@@ -1,6 +1,7 @@
 ﻿#include "GunUI.h"
 #include"Src/Application/main.h"
 #include"../../../GameObject/Weapon/WeaponBase.h"
+#include"../../../GameObject/UI/GameUI/GameUI.h"
 void GunUI::Update()
 {
 	OldBullet = NowBullet;
@@ -42,30 +43,36 @@ void GunUI::Update()
 
 void GunUI::DrawSprite()
 {
+	std::shared_ptr<GameUI>m_ui = m_wpUI.lock();
 
-	m_BulletNunColor = { 1,1,1,ColorIntensity };
+	if (m_ui)
+	{
+		if (m_ui->GetGameEnd() == false)
+		{
+			m_BulletNunColor = { 1,1,1,ColorIntensity };
 
-	 m_rect1 = { 0 + (m_clipTexNum1 * 45),0,(long)m_spBulletNunTex->GetWidth() / 10,(long)m_spBulletNunTex->GetHeight() };
-	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, m_UIpos .x-100, m_UIpos.y, m_rect1.width, m_rect1.height, &m_rect1, &m_BulletNunColor);
+			m_rect1 = { 0 + (m_clipTexNum1 * 45),0,(long)m_spBulletNunTex->GetWidth() / 10,(long)m_spBulletNunTex->GetHeight() };
+			KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, m_UIpos.x - 100, m_UIpos.y, m_rect1.width, m_rect1.height, &m_rect1, &m_BulletNunColor);
 
-	 m_rect2 = { 0 + (m_clipTexNum2 * 45),0,(long)m_spBulletNunTex->GetWidth() / 10,(long)m_spBulletNunTex->GetHeight() };
-	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, m_UIpos.x - 50, m_UIpos.y, m_rect2.width, m_rect2.height, &m_rect2, &m_BulletNunColor);
+			m_rect2 = { 0 + (m_clipTexNum2 * 45),0,(long)m_spBulletNunTex->GetWidth() / 10,(long)m_spBulletNunTex->GetHeight() };
+			KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, m_UIpos.x - 50, m_UIpos.y, m_rect2.width, m_rect2.height, &m_rect2, &m_BulletNunColor);
 
-	 m_rect3 = { 0 + (m_clipTexNum3 * 45),0,(long)m_spBulletNunTex->GetWidth() / 10,(long)m_spBulletNunTex->GetHeight() };
-	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, m_UIpos.x, m_UIpos.y, m_rect3.width, m_rect3.height, &m_rect3, &m_BulletNunColor);
+			m_rect3 = { 0 + (m_clipTexNum3 * 45),0,(long)m_spBulletNunTex->GetWidth() / 10,(long)m_spBulletNunTex->GetHeight() };
+			KdShaderManager::Instance().m_spriteShader.DrawTex(m_spBulletNunTex, m_UIpos.x, m_UIpos.y, m_rect3.width, m_rect3.height, &m_rect3, &m_BulletNunColor);
 
-	 m_TopRect = { 0,0,(long)m_spMagazinTexTop->GetWidth() ,0 + (((long)m_spMagazinTexTop->GetHeight() /MaxBullet)* NowBullet)};
-	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spMagazinTexTop, m_UIpos.x-170, m_UIpos.y + 70, m_TopRect.width, m_TopRect.height, &m_TopRect, &m_TopColor,{(0.5f),{1.0f}});
+			m_TopRect = { 0,0,(long)m_spMagazinTexTop->GetWidth() ,0 + (((long)m_spMagazinTexTop->GetHeight() / MaxBullet) * NowBullet) };
+			KdShaderManager::Instance().m_spriteShader.DrawTex(m_spMagazinTexTop, m_UIpos.x - 170, m_UIpos.y + 70, m_TopRect.width, m_TopRect.height, &m_TopRect, &m_TopColor, { (0.5f),{1.0f} });
 
-	 m_UnderRect = { 0,0,(long)m_spMagazinTexUnder->GetWidth() ,(long)m_spMagazinTexUnder->GetHeight()};
-	 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spMagazinTexUnder, m_UIpos.x-170, m_UIpos.y-10, m_UnderRect.width, m_UnderRect.height, &m_UnderRect, &m_UnderColor);
+			m_UnderRect = { 0,0,(long)m_spMagazinTexUnder->GetWidth() ,(long)m_spMagazinTexUnder->GetHeight() };
+			KdShaderManager::Instance().m_spriteShader.DrawTex(m_spMagazinTexUnder, m_UIpos.x - 170, m_UIpos.y - 10, m_UnderRect.width, m_UnderRect.height, &m_UnderRect, &m_UnderColor);
 
 
-	 if (m_spGun->GetIsReload() == true)
-	 {
-		 KdShaderManager::Instance().m_spriteShader.DrawTex(m_spReloadText, m_UIpos.x - 175, m_UIpos.y, nullptr, &m_ReloadTextColor);
-	 }
-
+			if (m_spGun->GetIsReload() == true)
+			{
+				KdShaderManager::Instance().m_spriteShader.DrawTex(m_spReloadText, m_UIpos.x - 175, m_UIpos.y, nullptr, &m_ReloadTextColor);
+			}
+		}
+	}
 }
 
 void GunUI::Init()
@@ -87,6 +94,7 @@ void GunUI::Init()
 
 	m_Scale = { 1,1,0 };
 
+	
 
 	ColorIntensity = 1;
 	ColorIntensityNum = 0.03f;
